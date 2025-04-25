@@ -124,7 +124,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#how-many-times-the-3-mains-protogonists-are-mentioned" id="toc-how-many-times-the-3-mains-protogonists-are-mentioned" class="nav-link" data-scroll-target="#how-many-times-the-3-mains-protogonists-are-mentioned">How many times the 3 mains protogonists are mentioned</a>
   <ul class="collapse">
   <li><a href="#counting" id="toc-counting" class="nav-link" data-scroll-target="#counting">Counting</a></li>
-  <li><a href="#drawing" id="toc-drawing" class="nav-link" data-scroll-target="#drawing">Drawing</a></li>
+  <li><a href="#drawing-a-heatmap" id="toc-drawing-a-heatmap" class="nav-link" data-scroll-target="#drawing-a-heatmap">Drawing a heatmap</a></li>
+  <li><a href="#drawing-a-stacked-bars-graph" id="toc-drawing-a-stacked-bars-graph" class="nav-link" data-scroll-target="#drawing-a-stacked-bars-graph">Drawing a stacked bars graph</a></li>
+  <li><a href="#another-one" id="toc-another-one" class="nav-link" data-scroll-target="#another-one">Another one</a></li>
   </ul></li>
   <li><a href="#how-many-times-pairs-of-two-protagonists-are-mentioned-together" id="toc-how-many-times-pairs-of-two-protagonists-are-mentioned-together" class="nav-link" data-scroll-target="#how-many-times-pairs-of-two-protagonists-are-mentioned-together">How many times pairs of two protagonists are mentioned together</a>
   <ul class="collapse">
@@ -196,7 +198,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="importing-data" class="level2">
 <h2 class="anchored" data-anchor-id="importing-data">Importing data</h2>
 <p>Importing <strong>fulltext.txt</strong>, a text file retrieved from <a href="https://www.gutenberg.org/ebooks/24264">Project Gutenberg</a>. It is written with traditionnal chinese characters. The header with metadata and the end notes with legal information were removed. Some minor typos were corrected to allow a good splitting.</p>
-<div id="7d665b48" class="cell" data-execution_count="1">
+<div id="324fdf5a" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The echo: false option disables the printing of code (only output is displayed).</span></span>
@@ -206,7 +208,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>Putting the content into a panda dataframe and shampooing the data :</p>
-<div id="f0442f56" class="cell" data-execution_count="2">
+<div id="90a68ca8" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -252,7 +254,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="how-many-times-the-3-mains-protogonists-are-mentioned">How many times the 3 mains protogonists are mentioned</h2>
 <section id="counting" class="level3">
 <h3 class="anchored" data-anchor-id="counting">Counting</h3>
-<div id="d140c154" class="cell" data-execution_count="3">
+<div id="35af9632" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count how many times the three main protagonists are counted in RawContent</span></span>
@@ -304,8 +306,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 </section>
-<section id="drawing" class="level3">
-<h3 class="anchored" data-anchor-id="drawing">Drawing</h3>
+<section id="drawing-a-heatmap" class="level3">
+<h3 class="anchored" data-anchor-id="drawing-a-heatmap">Drawing a heatmap</h3>
 <p>Plotting a heatmap for all the chapters with a different color intensity depending on how many times one of the three main protagonists are mentioned.</p>
 <div id="cell-fig-threemain" class="cell" data-execution_count="4">
 <details class="code-fold">
@@ -364,97 +366,197 @@ Figure&nbsp;1: Three Main Protagonists
 </div>
 </div>
 </section>
+<section id="drawing-a-stacked-bars-graph" class="level3">
+<h3 class="anchored" data-anchor-id="drawing-a-stacked-bars-graph">Drawing a stacked bars graph</h3>
+<div id="cell-fig-threemain-bars1" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up data</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>chapter_nums <span class="op">=</span> df_cn[<span class="st">'Chapter_num'</span>]</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>counts_baoyu <span class="op">=</span> df_cn[<span class="st">'count_JiaBaoyu'</span>]</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>counts_daiyu <span class="op">=</span> df_cn[<span class="st">'count_LinDaiyu'</span>]</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>counts_baochai <span class="op">=</span> df_cn[<span class="st">'count_XueBaochai'</span>]</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Set figure size</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot stacked bars</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>plt.bar(chapter_nums, counts_baoyu, label<span class="op">=</span><span class="st">'Jia Baoyu'</span>, color<span class="op">=</span><span class="st">'mediumvioletred'</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>plt.bar(chapter_nums, counts_daiyu, bottom<span class="op">=</span>counts_baoyu, label<span class="op">=</span><span class="st">'Lin Daiyu'</span>, color<span class="op">=</span><span class="st">'orchid'</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>plt.bar(</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    chapter_nums,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    counts_baochai,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    bottom<span class="op">=</span>counts_baoyu <span class="op">+</span> counts_daiyu,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="st">'Xue Baochai'</span>,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">'plum'</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Labels and legend</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'«Dream of the Red Chamber» Three Main Protagonists</span><span class="ch">\n</span><span class="st">(Number of Mentions per Chapter)'</span>)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Chapter Number'</span>)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Number of Mentions'</span>)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Save and show</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'characters_count_stackedbars.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-threemain-bars1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-threemain-bars1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-threemain-bars1-output-1.png" width="1142" height="567" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-threemain-bars1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Three Main Protagonists
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="another-one" class="level3">
+<h3 class="anchored" data-anchor-id="another-one">Another one</h3>
+<div id="cell-fig-threemain-bars2" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up data</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>chapter_nums <span class="op">=</span> df_cn[<span class="st">'Chapter_num'</span>]</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>counts_baoyu <span class="op">=</span> df_cn[<span class="st">'count_JiaBaoyu'</span>]</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>counts_daiyu <span class="op">=</span> df_cn[<span class="st">'count_LinDaiyu'</span>]</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>counts_baochai <span class="op">=</span> df_cn[<span class="st">'count_XueBaochai'</span>]</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Set figure and axes</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">3</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">10</span>), sharex<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Jia Baoyu</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>].bar(chapter_nums, counts_baoyu, color<span class="op">=</span><span class="st">'mediumvioletred'</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>].set_title(<span class="st">'Jia Baoyu – Number of Mentions per Chapter'</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>].set_ylabel(<span class="st">'Mentions'</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Lin Daiyu</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">1</span>].bar(chapter_nums, counts_daiyu, color<span class="op">=</span><span class="st">'orchid'</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">1</span>].set_title(<span class="st">'Lin Daiyu – Number of Mentions per Chapter'</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">1</span>].set_ylabel(<span class="st">'Mentions'</span>)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Xue Baochai</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">2</span>].bar(chapter_nums, counts_baochai, color<span class="op">=</span><span class="st">'plum'</span>)</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">2</span>].set_title(<span class="st">'Xue Baochai – Number of Mentions per Chapter'</span>)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">2</span>].set_ylabel(<span class="st">'Mentions'</span>)</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">2</span>].set_xlabel(<span class="st">'Chapter Number'</span>)</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Tweak layout</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'«Dream of the Red Chamber» – Character Mentions per Chapter'</span>, fontsize<span class="op">=</span><span class="dv">16</span>, y<span class="op">=</span><span class="fl">1.02</span>)</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'characters_count_separate_bars.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-threemain-bars2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-threemain-bars2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-threemain-bars2-output-1.png" width="1142" height="984" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-threemain-bars2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Three Main Protagonists
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
 </section>
 <section id="how-many-times-pairs-of-two-protagonists-are-mentioned-together" class="level2">
 <h2 class="anchored" data-anchor-id="how-many-times-pairs-of-two-protagonists-are-mentioned-together">How many times pairs of two protagonists are mentioned together</h2>
 <section id="counting-and-drawing" class="level3">
 <h3 class="anchored" data-anchor-id="counting-and-drawing">Counting and drawing</h3>
 <p>Threshold (maximum distance between names mentioned) = 20 words.</p>
-<div id="cell-fig-pairs" class="cell" data-execution_count="5">
+<div id="cell-fig-pairs" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count how many times there is a jia_baoyu_synonyms AND a lin_daiyu_synonyms within 20/threshold characters.</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>threshold <span class="op">=</span> <span class="dv">20</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile regex patterns (non-capturing groups for clarity)</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>jia_baoyu_pattern <span class="op">=</span> <span class="vs">r'(?:'</span> <span class="op">+</span> <span class="st">'|'</span>.join(jia_baoyu_synonyms) <span class="op">+</span> <span class="vs">r')'</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>lin_daiyu_pattern <span class="op">=</span> <span class="vs">r'(?:'</span> <span class="op">+</span> <span class="st">'|'</span>.join(lin_daiyu_synonyms) <span class="op">+</span> <span class="vs">r')'</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Pattern: 贾宝玉 followed by ≤20/threshold chars then 林黛玉, OR 林黛玉 followed by ≤20/threshold chars then 贾宝玉</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>jia_lin_pattern <span class="op">=</span> <span class="vs">rf'</span><span class="sc">{</span>jia_baoyu_pattern<span class="sc">}</span><span class="vs">.</span><span class="ch">{{</span><span class="vs">0,</span><span class="sc">{</span>threshold<span class="sc">}</span><span class="ch">}}</span><span class="sc">{</span>lin_daiyu_pattern<span class="sc">}</span><span class="vs">|</span><span class="sc">{</span>lin_daiyu_pattern<span class="sc">}</span><span class="vs">.</span><span class="ch">{{</span><span class="vs">0,</span><span class="sc">{</span>threshold<span class="sc">}</span><span class="ch">}}</span><span class="sc">{</span>jia_baoyu_pattern<span class="sc">}</span><span class="vs">'</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to count matches in a string</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> count_jia_lin_pairs(text):</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">len</span>(re.findall(jia_lin_pattern, text))</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply to the DataFrame</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>df_cn[<span class="st">'JiaBaoyu_LinDaiyu'</span>] <span class="op">=</span> df_cn[<span class="st">'RawContent'</span>].<span class="bu">apply</span>(count_jia_lin_pairs)</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co"># count pairs of jia et xue</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>xue_baochai_pattern <span class="op">=</span> <span class="vs">r'(?:'</span> <span class="op">+</span> <span class="st">'|'</span>.join(xue_baochai_synonyms) <span class="op">+</span> <span class="vs">r')'</span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Pattern: 贾宝玉 followed by ≤20/threshold chars then 林黛玉, OR 林黛玉 followed by ≤20/threshold chars then 贾宝玉</span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>jia_xue_pattern <span class="op">=</span> <span class="vs">rf'</span><span class="sc">{</span>jia_baoyu_pattern<span class="sc">}</span><span class="vs">.</span><span class="ch">{{</span><span class="vs">0,</span><span class="sc">{</span>threshold<span class="sc">}</span><span class="ch">}}</span><span class="sc">{</span>xue_baochai_pattern<span class="sc">}</span><span class="vs">|</span><span class="sc">{</span>xue_baochai_pattern<span class="sc">}</span><span class="vs">.</span><span class="ch">{{</span><span class="vs">0,</span><span class="sc">{</span>threshold<span class="sc">}</span><span class="ch">}}</span><span class="sc">{</span>jia_baoyu_pattern<span class="sc">}</span><span class="vs">'</span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to count matches in a string</span></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> count_jia_xue_pairs(text):</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">len</span>(re.findall(jia_xue_pattern, text))</span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply to the DataFrame</span></span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>df_cn[<span class="st">'JiaBaoyu_XueBaochai'</span>] <span class="op">=</span> df_cn[<span class="st">'RawContent'</span>].<span class="bu">apply</span>(count_jia_xue_pairs)</span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="co"># count pairs of lin et xue</span></span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>lin_xue_pattern <span class="op">=</span> <span class="vs">rf'</span><span class="sc">{</span>lin_daiyu_pattern<span class="sc">}</span><span class="vs">.</span><span class="ch">{{</span><span class="vs">0,</span><span class="sc">{</span>threshold<span class="sc">}</span><span class="ch">}}</span><span class="sc">{</span>xue_baochai_pattern<span class="sc">}</span><span class="vs">|</span><span class="sc">{</span>xue_baochai_pattern<span class="sc">}</span><span class="vs">.</span><span class="ch">{{</span><span class="vs">0,</span><span class="sc">{</span>threshold<span class="sc">}</span><span class="ch">}}</span><span class="sc">{</span>lin_daiyu_pattern<span class="sc">}</span><span class="vs">'</span></span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to count matches in a string</span></span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> count_lin_xue_pairs(text):</span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">len</span>(re.findall(lin_xue_pattern, text))</span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply to the DataFrame</span></span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>df_cn[<span class="st">'LinDaiyu_XueBaochai'</span>] <span class="op">=</span> df_cn[<span class="st">'RawContent'</span>].<span class="bu">apply</span>(count_lin_xue_pairs)</span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a><span class="co"># Set Chapter_num as index for labeling rows in the heatmap</span></span>
-<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>heatmap_data <span class="op">=</span> df_cn.set_index(<span class="st">'Chapter_num'</span>)[[<span class="st">'JiaBaoyu_LinDaiyu'</span>, <span class="st">'JiaBaoyu_XueBaochai'</span>,<span class="st">'LinDaiyu_XueBaochai'</span>]]</span>
-<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a><span class="co"># # Create the heatmap</span></span>
-<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the heatmap without labels or annotations</span></span>
-<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>sns.heatmap(</span>
-<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>    heatmap_data,</span>
-<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>    annot<span class="op">=</span><span class="va">False</span>,          <span class="co"># No numbers inside cells</span></span>
-<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">'RdPu'</span>,</span>
-<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>    linewidths<span class="op">=</span><span class="fl">0.5</span>,</span>
-<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>    cbar<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>    xticklabels<span class="op">=</span><span class="va">True</span>,    <span class="co">#  column names</span></span>
-<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>    yticklabels<span class="op">=</span><span class="va">False</span>     <span class="co"># No row labels</span></span>
-<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a><span class="co"># Set y-ticks at intervals of 25</span></span>
-<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>num_rows <span class="op">=</span> heatmap_data.shape[<span class="dv">0</span>]</span>
-<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>ticks <span class="op">=</span> np.arange(<span class="dv">0</span>, num_rows, <span class="dv">25</span>)</span>
-<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>plt.yticks(ticks <span class="op">+</span> <span class="fl">0.5</span>, ticks <span class="op">+</span> <span class="dv">1</span>)  <span class="co"># +0.5 centers ticks in cells, +1 shifts to 1-based indexing</span></span>
-<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'«Dream of the Red Chamber» Pairs of Protagonists </span><span class="ch">\n</span><span class="st"> Mentioned Together (per Chapter)'</span>)</span>
-<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Chapter Number'</span>)</span>
-<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">''</span>)  <span class="co"># Remove the x-axis label</span></span>
-<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'pairs_characters_hlm.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
-<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count how many times there is a jia_baoyu_synonyms AND a lin_daiyu_synonyms within 20/threshold characters.</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>threshold <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile regex patterns (non-capturing groups for clarity)</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>jia_baoyu_pattern <span class="op">=</span> <span class="vs">r'(?:'</span> <span class="op">+</span> <span class="st">'|'</span>.join(jia_baoyu_synonyms) <span class="op">+</span> <span class="vs">r')'</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>lin_daiyu_pattern <span class="op">=</span> <span class="vs">r'(?:'</span> <span class="op">+</span> <span class="st">'|'</span>.join(lin_daiyu_synonyms) <span class="op">+</span> <span class="vs">r')'</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Pattern: 贾宝玉 followed by ≤20/threshold chars then 林黛玉, OR 林黛玉 followed by ≤20/threshold chars then 贾宝玉</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>jia_lin_pattern <span class="op">=</span> <span class="vs">rf'</span><span class="sc">{</span>jia_baoyu_pattern<span class="sc">}</span><span class="vs">.</span><span class="ch">{{</span><span class="vs">0,</span><span class="sc">{</span>threshold<span class="sc">}</span><span class="ch">}}</span><span class="sc">{</span>lin_daiyu_pattern<span class="sc">}</span><span class="vs">|</span><span class="sc">{</span>lin_daiyu_pattern<span class="sc">}</span><span class="vs">.</span><span class="ch">{{</span><span class="vs">0,</span><span class="sc">{</span>threshold<span class="sc">}</span><span class="ch">}}</span><span class="sc">{</span>jia_baoyu_pattern<span class="sc">}</span><span class="vs">'</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to count matches in a string</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> count_jia_lin_pairs(text):</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">len</span>(re.findall(jia_lin_pattern, text))</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply to the DataFrame</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>df_cn[<span class="st">'JiaBaoyu_LinDaiyu'</span>] <span class="op">=</span> df_cn[<span class="st">'RawContent'</span>].<span class="bu">apply</span>(count_jia_lin_pairs)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co"># count pairs of jia et xue</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>xue_baochai_pattern <span class="op">=</span> <span class="vs">r'(?:'</span> <span class="op">+</span> <span class="st">'|'</span>.join(xue_baochai_synonyms) <span class="op">+</span> <span class="vs">r')'</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Pattern: 贾宝玉 followed by ≤20/threshold chars then 林黛玉, OR 林黛玉 followed by ≤20/threshold chars then 贾宝玉</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>jia_xue_pattern <span class="op">=</span> <span class="vs">rf'</span><span class="sc">{</span>jia_baoyu_pattern<span class="sc">}</span><span class="vs">.</span><span class="ch">{{</span><span class="vs">0,</span><span class="sc">{</span>threshold<span class="sc">}</span><span class="ch">}}</span><span class="sc">{</span>xue_baochai_pattern<span class="sc">}</span><span class="vs">|</span><span class="sc">{</span>xue_baochai_pattern<span class="sc">}</span><span class="vs">.</span><span class="ch">{{</span><span class="vs">0,</span><span class="sc">{</span>threshold<span class="sc">}</span><span class="ch">}}</span><span class="sc">{</span>jia_baoyu_pattern<span class="sc">}</span><span class="vs">'</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to count matches in a string</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> count_jia_xue_pairs(text):</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">len</span>(re.findall(jia_xue_pattern, text))</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply to the DataFrame</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>df_cn[<span class="st">'JiaBaoyu_XueBaochai'</span>] <span class="op">=</span> df_cn[<span class="st">'RawContent'</span>].<span class="bu">apply</span>(count_jia_xue_pairs)</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="co"># count pairs of lin et xue</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>lin_xue_pattern <span class="op">=</span> <span class="vs">rf'</span><span class="sc">{</span>lin_daiyu_pattern<span class="sc">}</span><span class="vs">.</span><span class="ch">{{</span><span class="vs">0,</span><span class="sc">{</span>threshold<span class="sc">}</span><span class="ch">}}</span><span class="sc">{</span>xue_baochai_pattern<span class="sc">}</span><span class="vs">|</span><span class="sc">{</span>xue_baochai_pattern<span class="sc">}</span><span class="vs">.</span><span class="ch">{{</span><span class="vs">0,</span><span class="sc">{</span>threshold<span class="sc">}</span><span class="ch">}}</span><span class="sc">{</span>lin_daiyu_pattern<span class="sc">}</span><span class="vs">'</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to count matches in a string</span></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> count_lin_xue_pairs(text):</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">len</span>(re.findall(lin_xue_pattern, text))</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply to the DataFrame</span></span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>df_cn[<span class="st">'LinDaiyu_XueBaochai'</span>] <span class="op">=</span> df_cn[<span class="st">'RawContent'</span>].<span class="bu">apply</span>(count_lin_xue_pairs)</span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a><span class="co"># Set Chapter_num as index for labeling rows in the heatmap</span></span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a>heatmap_data <span class="op">=</span> df_cn.set_index(<span class="st">'Chapter_num'</span>)[[<span class="st">'JiaBaoyu_LinDaiyu'</span>, <span class="st">'JiaBaoyu_XueBaochai'</span>,<span class="st">'LinDaiyu_XueBaochai'</span>]]</span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a><span class="co"># # Create the heatmap</span></span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the heatmap without labels or annotations</span></span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>sns.heatmap(</span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>    heatmap_data,</span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>    annot<span class="op">=</span><span class="va">False</span>,          <span class="co"># No numbers inside cells</span></span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">'RdPu'</span>,</span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a>    linewidths<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a>    cbar<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a>    xticklabels<span class="op">=</span><span class="va">True</span>,    <span class="co">#  column names</span></span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a>    yticklabels<span class="op">=</span><span class="va">False</span>     <span class="co"># No row labels</span></span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a><span class="co"># Set y-ticks at intervals of 25</span></span>
+<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a>num_rows <span class="op">=</span> heatmap_data.shape[<span class="dv">0</span>]</span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a>ticks <span class="op">=</span> np.arange(<span class="dv">0</span>, num_rows, <span class="dv">25</span>)</span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a>plt.yticks(ticks <span class="op">+</span> <span class="fl">0.5</span>, ticks <span class="op">+</span> <span class="dv">1</span>)  <span class="co"># +0.5 centers ticks in cells, +1 shifts to 1-based indexing</span></span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'«Dream of the Red Chamber» Pairs of Protagonists </span><span class="ch">\n</span><span class="st"> Mentioned Together (per Chapter)'</span>)</span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Chapter Number'</span>)</span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">''</span>)  <span class="co"># Remove the x-axis label</span></span>
+<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'pairs_characters_hlm.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="fig-pairs" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -463,7 +565,7 @@ Figure&nbsp;1: Three Main Protagonists
 <img src="index_files/figure-html/fig-pairs-output-1.png" width="882" height="567" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pairs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Pairs of Two Protagonists
+Figure&nbsp;4: Pairs of Two Protagonists
 </figcaption>
 </figure>
 </div>
@@ -475,11 +577,11 @@ Figure&nbsp;2: Pairs of Two Protagonists
 <h2 class="anchored" data-anchor-id="similarity-matrix">Similarity matrix</h2>
 <p>Under construction, it’s not very remarkable.</p>
 <p>Maybe, removing stopwords ?</p>
-<div id="cell-fig-similarity" class="cell" data-execution_count="6">
+<div id="cell-fig-similarity" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-stderr">
 <pre><code>Building prefix dict from the default dictionary ...
 Loading model from cache C:\Users\martinop\AppData\Local\Temp\jieba.cache
-Loading model cost 0.898 seconds.
+Loading model cost 0.951 seconds.
 Prefix dict has been built successfully.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
@@ -489,7 +591,7 @@ Prefix dict has been built successfully.</code></pre>
 <img src="index_files/figure-html/fig-similarity-output-2.png" width="1055" height="950" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-similarity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Similarity matrix
+Figure&nbsp;5: Similarity matrix
 </figcaption>
 </figure>
 </div>

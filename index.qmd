@@ -128,7 +128,7 @@ xue_baochai_pattern = '|'.join(xue_baochai_synonyms)
 df_cn['count_XueBaochai'] = df_cn['RawContent'].str.count(xue_baochai_pattern)
 ```
 
-### Drawing
+### Drawing a heatmap
 
 Plotting a heatmap for all the chapters with a different color intensity depending on how many times one of the three main protagonists are mentioned.
 
@@ -175,6 +175,87 @@ plt.ylabel('Chapter Number')
 plt.xlabel('')  # Remove the x-axis label
 plt.tight_layout()
 plt.savefig('characters_count_hlm.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+
+```
+
+### Drawing a stacked bars graph
+
+```{python}
+#| label: fig-threemain-bars1
+#| fig-cap: "Three Main Protagonists"
+#| code-fold: true
+
+# Set up data
+chapter_nums = df_cn['Chapter_num']
+counts_baoyu = df_cn['count_JiaBaoyu']
+counts_daiyu = df_cn['count_LinDaiyu']
+counts_baochai = df_cn['count_XueBaochai']
+
+# Set figure size
+plt.figure(figsize=(12, 6))
+
+# Plot stacked bars
+plt.bar(chapter_nums, counts_baoyu, label='Jia Baoyu', color='mediumvioletred')
+plt.bar(chapter_nums, counts_daiyu, bottom=counts_baoyu, label='Lin Daiyu', color='orchid')
+plt.bar(
+    chapter_nums,
+    counts_baochai,
+    bottom=counts_baoyu + counts_daiyu,
+    label='Xue Baochai',
+    color='plum'
+)
+
+# Labels and legend
+plt.title('«Dream of the Red Chamber» Three Main Protagonists\n(Number of Mentions per Chapter)')
+plt.xlabel('Chapter Number')
+plt.ylabel('Number of Mentions')
+plt.legend()
+plt.tight_layout()
+
+# Save and show
+plt.savefig('characters_count_stackedbars.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+```
+
+### Another one
+
+```{python}
+#| label: fig-threemain-bars2
+#| fig-cap: "Three Main Protagonists"
+#| code-fold: true
+
+# Set up data
+chapter_nums = df_cn['Chapter_num']
+counts_baoyu = df_cn['count_JiaBaoyu']
+counts_daiyu = df_cn['count_LinDaiyu']
+counts_baochai = df_cn['count_XueBaochai']
+
+# Set figure and axes
+fig, axs = plt.subplots(3, 1, figsize=(12, 10), sharex=True)
+
+# Jia Baoyu
+axs[0].bar(chapter_nums, counts_baoyu, color='mediumvioletred')
+axs[0].set_title('Jia Baoyu – Number of Mentions per Chapter')
+axs[0].set_ylabel('Mentions')
+
+# Lin Daiyu
+axs[1].bar(chapter_nums, counts_daiyu, color='orchid')
+axs[1].set_title('Lin Daiyu – Number of Mentions per Chapter')
+axs[1].set_ylabel('Mentions')
+
+# Xue Baochai
+axs[2].bar(chapter_nums, counts_baochai, color='plum')
+axs[2].set_title('Xue Baochai – Number of Mentions per Chapter')
+axs[2].set_ylabel('Mentions')
+axs[2].set_xlabel('Chapter Number')
+
+# Tweak layout
+plt.suptitle('«Dream of the Red Chamber» – Character Mentions per Chapter', fontsize=16, y=1.02)
+plt.tight_layout()
+plt.savefig('characters_count_separate_bars.png', dpi=300, bbox_inches='tight')
 plt.show()
 
 
