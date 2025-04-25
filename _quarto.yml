@@ -1,0 +1,18 @@
+project:
+  type: website
+  output-dir: docs
+
+lang: en
+
+website:
+  title: "Dream of the Red Chamber"
+
+format:
+  html:
+    theme: cosmo
+    css: annexes/styles.css
+    toc: true
+
+
+editor: visual
+
