@@ -209,7 +209,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="importing-data" class="level2">
 <h2 class="anchored" data-anchor-id="importing-data">Importing data</h2>
 <p>Importing <strong>fulltext.txt</strong>, a text file retrieved from <a href="https://www.gutenberg.org/ebooks/24264">Project Gutenberg</a>. It is written with traditionnal chinese characters. The header with metadata and the end notes with legal information were removed. Some minor typos were corrected to allow a good splitting.</p>
-<div id="54324ed7" class="cell" data-execution_count="1">
+<div id="1f48ed9c" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The echo: false option disables the printing of code (only output is displayed).</span></span>
@@ -219,7 +219,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>Putting the content into a panda dataframe and shampooing the data :</p>
-<div id="397f2ca0" class="cell" data-execution_count="2">
+<div id="2f808192" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -265,7 +265,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="how-many-times-the-3-mains-protogonists-are-mentioned">How many times the 3 mains protogonists are mentioned</h2>
 <section id="counting" class="level3">
 <h3 class="anchored" data-anchor-id="counting">Counting</h3>
-<div id="0398c4b3" class="cell" data-execution_count="3">
+<div id="0127e9cb" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count how many times the three main protagonists are counted in RawContent</span></span>
@@ -587,7 +587,9 @@ Figure&nbsp;4: Pairs of Two Protagonists
 <section id="similarity-matrix" class="level2">
 <h2 class="anchored" data-anchor-id="similarity-matrix">Similarity matrix</h2>
 <p>From <a href="https://github.com/zhangdaren916/The-Dream-of-the-Red-Chamber/">zhangdaren916</a>, I retrieved (and saved in /data) :</p>
-<div id="baca283b" class="cell" data-execution_count="8">
+<div id="7f8786dc" class="cell" data-execution_count="8">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># List of other synonyms  </span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>yuan_synonyms <span class="op">=</span> [</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"贾元春"</span>, <span class="st">"元春"</span> , <span class="st">"娘娘"</span></span>
@@ -628,6 +630,7 @@ Figure&nbsp;4: Pairs of Two Protagonists
 <span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>qin_synonyms <span class="op">=</span> [</span>
 <span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>  <span class="st">"秦可卿"</span>, <span class="st">"可卿"</span>, <span class="st">"可儿"</span>, <span class="st">"兼美"</span>, <span class="st">"警幻仙姑"</span></span>
 <span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <ul>
 <li><strong>red_dictionnary.txt</strong> (to help segmenting words of the corpus) : really useful ? I use the package jieba that seems to do the same thing.</li>
@@ -646,7 +649,7 @@ Figure&nbsp;4: Pairs of Two Protagonists
 <div class="cell-output cell-output-stderr">
 <pre><code>Building prefix dict from the default dictionary ...
 Loading model from cache C:\Users\martinop\AppData\Local\Temp\jieba.cache
-Loading model cost 1.305 seconds.
+Loading model cost 1.416 seconds.
 Prefix dict has been built successfully.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
@@ -666,7 +669,9 @@ Figure&nbsp;5: Similarity matrix
 </section>
 <section id="who-are-the-most-mentioned-characters" class="level2">
 <h2 class="anchored" data-anchor-id="who-are-the-most-mentioned-characters">Who are the most mentioned characters ?</h2>
-<div id="d7901740" class="cell" data-execution_count="10">
+<div id="6a3aff07" class="cell" data-execution_count="10">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># build a df based on the userdict.json and count how many times each key (and their synonyms) are mentioned in df_cn["RawContent"] column</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> defaultdict</span>
@@ -698,6 +703,7 @@ Figure&nbsp;5: Similarity matrix
 <span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>df_counts <span class="op">=</span> df_counts.sort_values(by<span class="op">=</span><span class="st">"Count"</span>, ascending<span class="op">=</span><span class="va">False</span>).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>df_counts.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <div>
 
@@ -744,7 +750,9 @@ Figure&nbsp;5: Similarity matrix
 </div>
 <section id="drawing-a-graph" class="level3">
 <h3 class="anchored" data-anchor-id="drawing-a-graph">Drawing a graph :</h3>
-<div id="a75d97f9" class="cell" data-execution_count="11">
+<div id="cell-most-mentioned-characters" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -777,82 +785,84 @@ Figure&nbsp;5: Similarity matrix
 <span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>plt.yticks(fontproperties<span class="op">=</span>zh_font)</span>
 <span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>plt.xticks(fontproperties<span class="op">=</span>zh_font)</span>
 <span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
-<pre><code>C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 36158 (\N{CJK UNIFIED IDEOGRAPH-8D3E}) missing from font(s) DejaVu Sans.
+<pre><code>C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 36158 (\N{CJK UNIFIED IDEOGRAPH-8D3E}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 27597 (\N{CJK UNIFIED IDEOGRAPH-6BCD}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 27597 (\N{CJK UNIFIED IDEOGRAPH-6BCD}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 23453 (\N{CJK UNIFIED IDEOGRAPH-5B9D}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 23453 (\N{CJK UNIFIED IDEOGRAPH-5B9D}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 29577 (\N{CJK UNIFIED IDEOGRAPH-7389}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 29577 (\N{CJK UNIFIED IDEOGRAPH-7389}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 29579 (\N{CJK UNIFIED IDEOGRAPH-738B}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 29579 (\N{CJK UNIFIED IDEOGRAPH-738B}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 29081 (\N{CJK UNIFIED IDEOGRAPH-7199}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 29081 (\N{CJK UNIFIED IDEOGRAPH-7199}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 20964 (\N{CJK UNIFIED IDEOGRAPH-51E4}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 20964 (\N{CJK UNIFIED IDEOGRAPH-51E4}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 22827 (\N{CJK UNIFIED IDEOGRAPH-592B}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 22827 (\N{CJK UNIFIED IDEOGRAPH-592B}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 20154 (\N{CJK UNIFIED IDEOGRAPH-4EBA}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 20154 (\N{CJK UNIFIED IDEOGRAPH-4EBA}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 26519 (\N{CJK UNIFIED IDEOGRAPH-6797}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 26519 (\N{CJK UNIFIED IDEOGRAPH-6797}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 40667 (\N{CJK UNIFIED IDEOGRAPH-9EDB}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 40667 (\N{CJK UNIFIED IDEOGRAPH-9EDB}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 34203 (\N{CJK UNIFIED IDEOGRAPH-859B}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 34203 (\N{CJK UNIFIED IDEOGRAPH-859B}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 38039 (\N{CJK UNIFIED IDEOGRAPH-9497}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 38039 (\N{CJK UNIFIED IDEOGRAPH-9497}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 29711 (\N{CJK UNIFIED IDEOGRAPH-740F}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 29711 (\N{CJK UNIFIED IDEOGRAPH-740F}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 24179 (\N{CJK UNIFIED IDEOGRAPH-5E73}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 24179 (\N{CJK UNIFIED IDEOGRAPH-5E73}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 20799 (\N{CJK UNIFIED IDEOGRAPH-513F}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 20799 (\N{CJK UNIFIED IDEOGRAPH-513F}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 25506 (\N{CJK UNIFIED IDEOGRAPH-63A2}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 25506 (\N{CJK UNIFIED IDEOGRAPH-63A2}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 26149 (\N{CJK UNIFIED IDEOGRAPH-6625}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 26149 (\N{CJK UNIFIED IDEOGRAPH-6625}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 25919 (\N{CJK UNIFIED IDEOGRAPH-653F}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 25919 (\N{CJK UNIFIED IDEOGRAPH-653F}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 23016 (\N{CJK UNIFIED IDEOGRAPH-59E8}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 23016 (\N{CJK UNIFIED IDEOGRAPH-59E8}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 22920 (\N{CJK UNIFIED IDEOGRAPH-5988}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 22920 (\N{CJK UNIFIED IDEOGRAPH-5988}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 21490 (\N{CJK UNIFIED IDEOGRAPH-53F2}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 21490 (\N{CJK UNIFIED IDEOGRAPH-53F2}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 28248 (\N{CJK UNIFIED IDEOGRAPH-6E58}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 28248 (\N{CJK UNIFIED IDEOGRAPH-6E58}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 20113 (\N{CJK UNIFIED IDEOGRAPH-4E91}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 20113 (\N{CJK UNIFIED IDEOGRAPH-4E91}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 29645 (\N{CJK UNIFIED IDEOGRAPH-73CD}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 29645 (\N{CJK UNIFIED IDEOGRAPH-73CD}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 26228 (\N{CJK UNIFIED IDEOGRAPH-6674}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 26228 (\N{CJK UNIFIED IDEOGRAPH-6674}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 38639 (\N{CJK UNIFIED IDEOGRAPH-96EF}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 38639 (\N{CJK UNIFIED IDEOGRAPH-96EF}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 37026 (\N{CJK UNIFIED IDEOGRAPH-90A2}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 37026 (\N{CJK UNIFIED IDEOGRAPH-90A2}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 39321 (\N{CJK UNIFIED IDEOGRAPH-9999}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 39321 (\N{CJK UNIFIED IDEOGRAPH-9999}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 33777 (\N{CJK UNIFIED IDEOGRAPH-83F1}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 33777 (\N{CJK UNIFIED IDEOGRAPH-83F1}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 23588 (\N{CJK UNIFIED IDEOGRAPH-5C24}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 23588 (\N{CJK UNIFIED IDEOGRAPH-5C24}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 27663 (\N{CJK UNIFIED IDEOGRAPH-6C0F}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 27663 (\N{CJK UNIFIED IDEOGRAPH-6C0F}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 34784 (\N{CJK UNIFIED IDEOGRAPH-87E0}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 34784 (\N{CJK UNIFIED IDEOGRAPH-87E0}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 36198 (\N{CJK UNIFIED IDEOGRAPH-8D66}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 36198 (\N{CJK UNIFIED IDEOGRAPH-8D66}) missing from font(s) DejaVu Sans.
   plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_360\4252832057.py:29: UserWarning: Glyph 33993 (\N{CJK UNIFIED IDEOGRAPH-84C9}) missing from font(s) DejaVu Sans.
+C:\Users\martinop\AppData\Local\Temp\ipykernel_4828\1572738482.py:29: UserWarning: Glyph 33993 (\N{CJK UNIFIED IDEOGRAPH-84C9}) missing from font(s) DejaVu Sans.
   plt.tight_layout()</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<div>
+<div id="most-mentioned-characters" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-12-output-2.png" width="1158" height="756" class="figure-img"></p>
+<p><img src="index_files/figure-html/most-mentioned-characters-output-2.png" width="1158" height="756" class="figure-img"></p>
+<figcaption>Most mentioned characters</figcaption>
 </figure>
 </div>
 </div>

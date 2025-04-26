@@ -363,6 +363,7 @@ plt.show()
 From [zhangdaren916](https://github.com/zhangdaren916/The-Dream-of-the-Red-Chamber/), I retrieved (and saved in /data) :
 
 ```{python}
+#| code-fold: true
 
 # List of other synonyms  
 yuan_synonyms = [
@@ -492,6 +493,8 @@ plt.show()
 ## Who are the most mentioned characters ?
 
 ```{python}
+#| code-fold: true
+
 # build a df based on the userdict.json and count how many times each key (and their synonyms) are mentioned in df_cn["RawContent"] column
 
 from collections import defaultdict
@@ -528,6 +531,10 @@ df_counts.head()
 ### Drawing a graph :
 
 ```{python}
+#| label: most-mentioned-characters
+#| fig-cap: "Most mentioned characters"
+#| code-fold: true
+
 import matplotlib.pyplot as plt
 
 
