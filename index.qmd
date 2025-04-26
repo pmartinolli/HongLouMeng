@@ -26,7 +26,7 @@ Importing **fulltext.txt**, a text file retrieved from [Project Gutenberg](https
 
 # The echo: false option disables the printing of code (only output is displayed).
 
-with open("fulltext.txt", "r", encoding="utf-8") as file:
+with open("data/fulltext.txt", "r", encoding="utf-8") as file:
     main_text = file.read()
 ```
 
@@ -102,7 +102,7 @@ df_cn['count_JiaBaoyu'] = df_cn['RawContent'].str.count(jia_baoyu_pattern)
 # List of Lin Daiyu's synonyms
 lin_daiyu_synonyms = [
     '林黛玉', '黛玉', '瀟湘妃子', '顰兒', '颦儿',
-    '林姑娘', '林妹妹', '潇湘妃子'
+    '林姑娘', '林妹妹', '潇湘妃子', "玉儿", "颦颦",
 ]
 
 # Join them into a regex pattern
@@ -174,7 +174,7 @@ plt.title('«Dream of the Red Chamber» Three Main Protagonists \n(Number of Men
 plt.ylabel('Chapter Number')
 plt.xlabel('')  # Remove the x-axis label
 plt.tight_layout()
-plt.savefig('characters_count_hlm.png', dpi=300, bbox_inches='tight')
+plt.savefig('images/characters_count_hlm.png', dpi=300, bbox_inches='tight')
 plt.show()
 
 
@@ -215,12 +215,12 @@ plt.legend()
 plt.tight_layout()
 
 # Save and show
-plt.savefig('characters_count_stackedbars.png', dpi=300, bbox_inches='tight')
+plt.savefig('images/characters_count_stackedbars.png', dpi=300, bbox_inches='tight')
 plt.show()
 
 ```
 
-### Another one
+### Another one (not stacked)
 
 ```{python}
 #| label: fig-threemain-bars2
@@ -255,7 +255,7 @@ axs[2].set_xlabel('Chapter Number')
 # Tweak layout
 plt.suptitle('«Dream of the Red Chamber» – Character Mentions per Chapter', fontsize=16, y=1.02)
 plt.tight_layout()
-plt.savefig('characters_count_separate_bars.png', dpi=300, bbox_inches='tight')
+plt.savefig('images/characters_count_separate_bars.png', dpi=300, bbox_inches='tight')
 plt.show()
 
 
@@ -353,16 +353,72 @@ plt.title('«Dream of the Red Chamber» Pairs of Protagonists \n Mentioned Toget
 plt.ylabel('Chapter Number')
 plt.xlabel('')  # Remove the x-axis label
 plt.tight_layout()
-plt.savefig('pairs_characters_hlm.png', dpi=300, bbox_inches='tight')
+plt.savefig('images/pairs_characters_hlm.png', dpi=300, bbox_inches='tight')
 plt.show()
 
 ```
 
 ## Similarity matrix
 
-Under construction, it's not very remarkable.
+From [zhangdaren916](https://github.com/zhangdaren916/The-Dream-of-the-Red-Chamber/), I retrieved (and saved in /data) :
 
-Maybe, removing stopwords ?
+```{python}
+
+# List of other synonyms  
+yuan_synonyms = [
+    "贾元春", "元春" , "娘娘"
+]
+
+tan_synonyms = [
+     "贾探春", "探春", "探丫头", "三姑娘", "三妹妹", "三小姐", "敏探春" ,"三丫头"
+]
+
+shi_synonyms = [
+  "史湘云", "湘云", "云儿", "诗疯子", "痴湘云", "酣湘云", "娥皇", "女英", "大英"
+]
+
+miao_synonyms = [
+  "妙玉", "妒恨菩提", "畸人", "槛外人", "畸零之人", "槛外之人"
+]
+
+ying_synonyms = [
+  "贾迎春", "迎春", "二丫头", "二小姐", "二姑娘", "二木头", "懦小姐"
+]
+
+xi_synonyms = [
+  "贾惜春", "惜春", "四姑娘", "四小姐", "四丫头", "四妹妹"
+]
+
+feng_synonyms = [ 
+  "王熙凤", "凤姐", "凤丫头", "二奶奶", "凤哥儿", "凤姑娘", "凤哥", "阿凤", "凤辣子", "凤儿", "鬼灵精儿", "熙凤" 
+]
+
+qiao_synonyms = [
+  "贾巧姐", "巧姐儿", "大姐儿", "巧哥儿", "妞妞", "大妞妞", "巧姐"
+]
+
+zhi_synonyms = [
+  "李纨", "佛爷", "大菩萨", "李宫裁"
+]
+
+qin_synonyms = [
+  "秦可卿", "可卿", "可儿", "兼美", "警幻仙姑"
+]
+```
+
+-   **red_dictionnary.txt** (to help segmenting words of the corpus) : really useful ? I use the package jieba that seems to do the same thing.
+-   **red_social_net_weight.txt** (chapweight = weight per chapitre / duanweight = weight per paragraph) : so so, i need to redo it. The first two columns are good.
+-   **stopwords.txt** (a list of stop words to chop off the corpus) : really useful
+
+From [lileslll](https://github.com/lileslll/Dream_of_the_Red_Chamber_Character_Analysis/), I found a pearl :
+
+-   **userdict.json** : contains 165 characters of the novel and theirs nicknames... awesome ! lets use it now...
+
+### A similarity matrix (based on a selection of characters)
+
+... I create a new column in the dataframe that contains only the characters listed in **userdict.json** and remove everything else.
+
+Problem : userdic.json is in simplified chinese and the corpus is in traditional chinese. I ask chatGPT to create new synonyms in traditional chinese characters **userdict_w_tradchar.json**.
 
 ```{python}
 #| label: fig-similarity
@@ -371,19 +427,38 @@ Maybe, removing stopwords ?
 #| echo: false
 
 import jieba
+import json
+
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-# Optional: Use jieba to segment Chinese text
-def jieba_tokenizer(text):
-    return jieba.lcut(text)
+# Load the user dictionary
+with open("data/userdict_w_tradchar.json", "r", encoding="utf-8") as f:
+    user_dict = json.load(f)
 
-# Segment Chinese text with jieba
-df_cn['Segmented'] = df_cn['RawContent'].apply(lambda x: ' '.join(jieba.lcut(x)))
+# Flatten all names and synonyms into a set for fast lookup
+valid_names = set(user_dict.keys())
+for synonyms in user_dict.values():
+    valid_names.update(synonyms)
+
+import jieba
+
+def extract_only_names(text):
+    words = jieba.lcut(text)
+    names = [word for word in words if word in valid_names]
+    return ' '.join(names)
+
+# Apply to create new column
+df_cn['OnlyNames'] = df_cn['RawContent'].apply(extract_only_names)
+
+
+
+
+
 
 # TF-IDF Vectorization on segmented text
 vectorizer = TfidfVectorizer()
-tfidf_matrix = vectorizer.fit_transform(df_cn['Segmented'])
+tfidf_matrix = vectorizer.fit_transform(df_cn['OnlyNames'])
 
 # Cosine similarity between chapters
 similarity_matrix = cosine_similarity(tfidf_matrix)
@@ -406,14 +481,90 @@ sns.heatmap(similarity_df,
             vmax=1,
             linewidths=0.2)
 
-plt.title("«Dream of the Red Chamber» Chapter Similarity Matrix")
+plt.title("Chapter Similarity Matrix (based on a selection of characters)")
 plt.xlabel("Chapters")
 plt.ylabel("Chapters")
 plt.tight_layout()
-plt.savefig('similarity_matrix.png', dpi=300, bbox_inches='tight')
+plt.savefig('images/similarity_matrix2.png', dpi=300, bbox_inches='tight')
 plt.show()
-
 ```
+
+## Who are the most mentioned characters ?
+
+```{python}
+# build a df based on the userdict.json and count how many times each key (and their synonyms) are mentioned in df_cn["RawContent"] column
+
+from collections import defaultdict
+
+# Step 1: Create a reverse lookup — map each synonym to its main name
+synonym_to_main = {}
+for main, synonyms in user_dict.items():
+    synonym_to_main[main] = main  # main name maps to itself
+    for synonym in synonyms:
+        synonym_to_main[synonym] = main
+
+# Step 2: Initialize counter
+counts = defaultdict(int)
+
+# Step 3: Count occurrences across df_cn["RawContent"]
+for text in df_cn["RawContent"]:
+    words = jieba.lcut(text)
+    for word in words:
+        if word in synonym_to_main:
+            main_name = synonym_to_main[word]
+            counts[main_name] += 1
+
+# Step 4: Convert to DataFrame
+df_counts = pd.DataFrame([
+    {"MainName": name, "Count": count} for name, count in counts.items()
+])
+
+# Optional: sort by frequency
+df_counts = df_counts.sort_values(by="Count", ascending=False).reset_index(drop=True)
+
+df_counts.head()
+```
+
+### Drawing a graph :
+
+```{python}
+import matplotlib.pyplot as plt
+
+
+import matplotlib.font_manager as fm
+# Use SimHei font for Chinese support on Windows
+font_path = "C:/Windows/Fonts/simhei.ttf"
+zh_font = fm.FontProperties(fname=font_path)
+
+
+# Select top 20
+top_20 = df_counts.head(20)
+
+# Plot
+plt.figure(figsize=(12, 8))
+
+# bar management
+bars = plt.barh(top_20["MainName"], top_20["Count"], color="skyblue")
+# Add count values to the right of each bar
+for bar in bars:
+    width = bar.get_width()
+    plt.text(width + 1, bar.get_y() + bar.get_height() / 2,
+             str(width), va='center', fontsize=10, fontproperties=zh_font)
+
+plt.barh(top_20["MainName"], top_20["Count"], color="lightpink")
+plt.xlabel("Count", fontproperties=zh_font)
+plt.ylabel("Name", fontproperties=zh_font)
+plt.title("Top 20 Most Mentioned Names")
+plt.gca().invert_yaxis()  # So the highest is at the top
+plt.tight_layout()
+plt.yticks(fontproperties=zh_font)
+plt.xticks(fontproperties=zh_font)
+plt.show()
+```
+
+### A network graph of all the relations between 20 most mentioned characters
+
+Under construction
 
 ## Inspirations and further readings
 
