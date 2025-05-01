@@ -128,13 +128,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#drawing-a-stacked-bars-graph" id="toc-drawing-a-stacked-bars-graph" class="nav-link" data-scroll-target="#drawing-a-stacked-bars-graph">Drawing a stacked bars graph</a></li>
   <li><a href="#another-bar-graph" id="toc-another-bar-graph" class="nav-link" data-scroll-target="#another-bar-graph">Another bar graph</a></li>
   </ul></li>
-  <li><a href="#how-many-times-pairs-of-protagonists-are-mentioned-together" id="toc-how-many-times-pairs-of-protagonists-are-mentioned-together" class="nav-link" data-scroll-target="#how-many-times-pairs-of-protagonists-are-mentioned-together">How many times pairs of protagonists are mentioned together</a>
+  <li><a href="#number-of-times-each-pair-of-protagonists-is-mentioned-together" id="toc-number-of-times-each-pair-of-protagonists-is-mentioned-together" class="nav-link" data-scroll-target="#number-of-times-each-pair-of-protagonists-is-mentioned-together">Number of times each pair of protagonists is mentioned together</a>
   <ul class="collapse">
   <li><a href="#counting-1" id="toc-counting-1" class="nav-link" data-scroll-target="#counting-1">Counting</a></li>
   <li><a href="#drawing" id="toc-drawing" class="nav-link" data-scroll-target="#drawing">Drawing</a></li>
   </ul></li>
+  <li><a href="#expanding-the-visualizations-to-other-characters-of-the-novel" id="toc-expanding-the-visualizations-to-other-characters-of-the-novel" class="nav-link" data-scroll-target="#expanding-the-visualizations-to-other-characters-of-the-novel">Expanding the visualizations to other characters of the novel</a>
+  <ul class="collapse">
   <li><a href="#changing-the-counting-method" id="toc-changing-the-counting-method" class="nav-link" data-scroll-target="#changing-the-counting-method">Changing the counting method</a></li>
-  <li><a href="#similarity-matrix" id="toc-similarity-matrix" class="nav-link" data-scroll-target="#similarity-matrix">Similarity matrix</a></li>
+  <li><a href="#first-simple-similarity-matrix" id="toc-first-simple-similarity-matrix" class="nav-link" data-scroll-target="#first-simple-similarity-matrix">First simple similarity matrix</a></li>
+  </ul></li>
   <li><a href="#who-are-the-most-mentioned-characters" id="toc-who-are-the-most-mentioned-characters" class="nav-link" data-scroll-target="#who-are-the-most-mentioned-characters">Who are the most mentioned characters ?</a>
   <ul class="collapse">
   <li><a href="#structure-of-the-json-sample" id="toc-structure-of-the-json-sample" class="nav-link" data-scroll-target="#structure-of-the-json-sample">Structure of the JSON (sample)</a></li>
@@ -142,7 +145,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#a-network-graph-of-all-the-relations-between-20-most-mentioned-characters" id="toc-a-network-graph-of-all-the-relations-between-20-most-mentioned-characters" class="nav-link" data-scroll-target="#a-network-graph-of-all-the-relations-between-20-most-mentioned-characters">A network graph of all the relations between 20 most mentioned characters</a>
   <ul class="collapse">
-  <li><a href="#counting-the-positions" id="toc-counting-the-positions" class="nav-link" data-scroll-target="#counting-the-positions">Counting the positions</a></li>
+  <li><a href="#retrieving-the-match-positions" id="toc-retrieving-the-match-positions" class="nav-link" data-scroll-target="#retrieving-the-match-positions">Retrieving the match positions</a></li>
   <li><a href="#building-the-matrix" id="toc-building-the-matrix" class="nav-link" data-scroll-target="#building-the-matrix">Building the matrix</a></li>
   <li><a href="#drawing-a-heatmap-1" id="toc-drawing-a-heatmap-1" class="nav-link" data-scroll-target="#drawing-a-heatmap-1">Drawing a heatmap</a></li>
   </ul></li>
@@ -189,7 +192,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div>
   <div class="abstract">
     <div class="block-title">Abstract</div>
-    Data visualization of the three main protagonists of 红楼梦 (Dream of the Red Chamber), a classic of Chinese literature. It represents their mentions along the 120 chapters of the novel.
+    This paper presents data visualizations focusing on the three main protagonists of Dream of the Red Chamber (红楼梦), a classic work of Chinese literature. It presents the results of some experiments I conducted using Python in a Quarto environment with Jupyter.
   </div>
 </div>
 
@@ -205,13 +208,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>It’s a data visualization of the three main protagonists of 红楼梦 (<a href="https://en.wikipedia.org/wiki/Dream_of_the_Red_Chamber"><em>Dream of the Red Chamber</em></a>), a classic of Chinese literature. It represents their mentions along the 120 chapters of the novel.</p>
-<p>This page is the result of some experimentations I made to try Python in a Quarto environment with jupyter.</p>
+<p>This paper presents data visualizations focusing on the three main protagonists of <a href="https://en.wikipedia.org/wiki/Dream_of_the_Red_Chamber"><em>Dream of the Red Chamber</em></a> (<em>红楼梦</em>), a classic work of Chinese literature. It presents the results of some experiments I conducted using Python in a Quarto environment with Jupyter.</p>
 </section>
 <section id="importing-data" class="level2">
 <h2 class="anchored" data-anchor-id="importing-data">Importing data</h2>
 <p>Importing <strong>fulltext_simplified.txt</strong>, a text file retrieved from <a href="https://github.com/lileslll/Dream_of_the_Red_Chamber_Character_Analysis">lilesIII</a>. It is written with simplified chinese characters.</p>
-<div id="434555b8" class="cell" data-execution_count="1">
+<div id="74a9e615" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The echo: false option disables the printing of code (only output is displayed).</span></span>
@@ -222,6 +224,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Putting the content into a panda dataframe and shampooing the data :</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 45%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Chapter_num</th>
@@ -231,9 +238,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td></td>
-<td></td>
-<td></td>
+<td>integer</td>
+<td>extracted from header of the chapter</td>
+<td>full text of the chapter</td>
 </tr>
 </tbody>
 </table>
@@ -242,7 +249,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="how-many-times-the-3-main-protogonists-are-mentioned">How many times the 3 main protogonists are mentioned</h2>
 <section id="counting" class="level3">
 <h3 class="anchored" data-anchor-id="counting">Counting</h3>
-<div id="cc9474d0" class="cell" data-execution_count="3">
+<p>We construct a list of name variants and synonyms for the three main protagonists—Jia Baoyu, Lin Daiyu, and Xue Baochai—and quantify their occurrences throughout the 120 chapters.</p>
+<div id="38249612" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count how many times the three main protagonists are counted in RawContent</span></span>
@@ -296,7 +304,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="drawing-a-heatmap" class="level3">
 <h3 class="anchored" data-anchor-id="drawing-a-heatmap">Drawing a heatmap</h3>
-<p>Plotting a heatmap for all the chapters with a different color intensity depending on how many times one of the three main protagonists are mentioned.</p>
+<p>A chapter-by-chapter heatmap is generated, where color intensity corresponds to the frequency of mentions of any of the three main protagonists.</p>
 <div id="cell-fig-threemain" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
@@ -356,6 +364,7 @@ Figure&nbsp;1: Three Main Protagonists
 </section>
 <section id="drawing-a-stacked-bars-graph" class="level3">
 <h3 class="anchored" data-anchor-id="drawing-a-stacked-bars-graph">Drawing a stacked bars graph</h3>
+<p>It’s not very readable, but it gives a rough idea of which parts of the novel involve interactions between the protagonists.</p>
 <div id="cell-fig-threemain-bars1" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
@@ -456,12 +465,12 @@ Figure&nbsp;3: Three Main Protagonists
 </div>
 </section>
 </section>
-<section id="how-many-times-pairs-of-protagonists-are-mentioned-together" class="level2">
-<h2 class="anchored" data-anchor-id="how-many-times-pairs-of-protagonists-are-mentioned-together">How many times pairs of protagonists are mentioned together</h2>
+<section id="number-of-times-each-pair-of-protagonists-is-mentioned-together" class="level2">
+<h2 class="anchored" data-anchor-id="number-of-times-each-pair-of-protagonists-is-mentioned-together">Number of times each pair of protagonists is mentioned together</h2>
 <section id="counting-1" class="level3">
 <h3 class="anchored" data-anchor-id="counting-1">Counting</h3>
-<p>Threshold (maximum distance between names mentioned) = 20 words.</p>
-<div id="af7ee208" class="cell" data-execution_count="7">
+<p>Threshold (maximum distance between two names mentioned) = 20 words.</p>
+<div id="6eb36575" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count how many times there is a jia_baoyu_synonyms AND a lin_daiyu_synonyms within 20/threshold characters.</span></span>
@@ -562,14 +571,16 @@ Figure&nbsp;4: Pairs of Two Protagonists
 </div>
 </section>
 </section>
-<section id="changing-the-counting-method" class="level2">
-<h2 class="anchored" data-anchor-id="changing-the-counting-method">Changing the counting method</h2>
+<section id="expanding-the-visualizations-to-other-characters-of-the-novel" class="level2">
+<h2 class="anchored" data-anchor-id="expanding-the-visualizations-to-other-characters-of-the-novel">Expanding the visualizations to other characters of the novel</h2>
+<section id="changing-the-counting-method" class="level3">
+<h3 class="anchored" data-anchor-id="changing-the-counting-method">Changing the counting method</h3>
 <p>From now on, I will not use manual synonyms like before because it’s too heavy for managing a high number of characters.</p>
-<p>From <a href="https://github.com/lileslll/Dream_of_the_Red_Chamber_Character_Analysis/">lileslll</a>, I found the file <strong>userdict.json</strong> : contains 165 characters of the novel and theirs nicknames… I rename it <strong>userdict_simplified.json</strong>.</p>
+<p>From <a href="https://github.com/lileslll/Dream_of_the_Red_Chamber_Character_Analysis/">lileslll</a>, I found the file <code>userdict.json</code>. It contains 165 characters of the novel and theirs nicknames… I rename it <code>userdict_simplified.json</code>.</p>
 </section>
-<section id="similarity-matrix" class="level2">
-<h2 class="anchored" data-anchor-id="similarity-matrix">Similarity matrix</h2>
-<p>I remove from the corpus all the words that are not in <strong>userdict_simplified.json</strong>. Like that, we can built a similarity matrix based on the characters in each chapters.</p>
+<section id="first-simple-similarity-matrix" class="level3">
+<h3 class="anchored" data-anchor-id="first-simple-similarity-matrix">First simple similarity matrix</h3>
+<p>I filter the corpus by removing all words not found in <code>userdict_simplified.json</code>, allowing us to build a simple similarity matrix based solely on the characters mentioned in each chapter.</p>
 <div id="cell-fig-similarity" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
@@ -638,7 +649,7 @@ Figure&nbsp;4: Pairs of Two Protagonists
 <div class="cell-output cell-output-stderr">
 <pre><code>Building prefix dict from the default dictionary ...
 Loading model from cache C:\Users\martinop\AppData\Local\Temp\jieba.cache
-Loading model cost 0.848 seconds.
+Loading model cost 0.859 seconds.
 Prefix dict has been built successfully.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
@@ -655,9 +666,10 @@ Figure&nbsp;5: Similarity matrix
 </div>
 </div>
 </section>
+</section>
 <section id="who-are-the-most-mentioned-characters" class="level2">
 <h2 class="anchored" data-anchor-id="who-are-the-most-mentioned-characters">Who are the most mentioned characters ?</h2>
-<p>Put the <strong>userdic_simplified</strong> into a df with two columns : <strong>Name</strong> and <strong>NamePattern</strong>.</p>
+<p>Put the <strong>userdic_simplified</strong> into a dataframe with two columns : <strong>Name</strong> and <strong>NamePattern</strong>.</p>
 <section id="structure-of-the-json-sample" class="level3">
 <h3 class="anchored" data-anchor-id="structure-of-the-json-sample">Structure of the JSON (sample)</h3>
 <div class="sourceCode" id="cb10"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
@@ -671,7 +683,7 @@ Figure&nbsp;5: Similarity matrix
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span><span class="fu">,</span></span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"林黛玉"</span><span class="fu">:</span> <span class="ot">[</span></span>
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"林黛玉"</span><span class="ot">,</span>            </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The first key will be <strong>Name</strong> and the second key will be <strong>NamePattern</strong>.</p>
+<p>The first key will be <strong>Name</strong> and the second key will be <strong>NamePattern</strong>. These keys become the columns of the dataframe. A 3rd column, <strong>Count</strong>, stores the number of mentions.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -698,7 +710,7 @@ Figure&nbsp;5: Similarity matrix
 </tr>
 </tbody>
 </table>
-<div id="df4e6951" class="cell" data-execution_count="10">
+<div id="d0549897" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
@@ -748,6 +760,7 @@ Figure&nbsp;5: Similarity matrix
 </section>
 <section id="drawing-a-bar-graph" class="level3">
 <h3 class="anchored" data-anchor-id="drawing-a-bar-graph">Drawing a bar graph</h3>
+<p>To improve readability, I display the results of the count using a simple visualization, showing only the top 20 most frequently mentioned characters.</p>
 <div id="cell-most-mentioned-characters" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Code</summary>
@@ -797,9 +810,10 @@ Figure&nbsp;5: Similarity matrix
 </section>
 <section id="a-network-graph-of-all-the-relations-between-20-most-mentioned-characters" class="level2">
 <h2 class="anchored" data-anchor-id="a-network-graph-of-all-the-relations-between-20-most-mentioned-characters">A network graph of all the relations between 20 most mentioned characters</h2>
-<section id="counting-the-positions" class="level3">
-<h3 class="anchored" data-anchor-id="counting-the-positions">Counting the positions</h3>
-<p>Expanding <strong>userdict_simplified.json</strong> to add all the positions of each matches.</p>
+<p>That’s ambitious. I will count how many times a pair of characters (<em>story</em> characters) are mentioned together. I choose a threshold of 20 characters (<em>written</em> characters) between two mentioned names.</p>
+<section id="retrieving-the-match-positions" class="level3">
+<h3 class="anchored" data-anchor-id="retrieving-the-match-positions">Retrieving the match positions</h3>
+<p>Expanding <strong>userdict_simplified.json</strong> to add the <strong>Chapter_num</strong> where the <strong>NamePattern</strong> is mentioned and the numerical <strong>position</strong> of each match.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -830,7 +844,7 @@ Figure&nbsp;5: Similarity matrix
 </tr>
 </tbody>
 </table>
-<div id="6c3c1604" class="cell" data-execution_count="12">
+<div id="3b52c704" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> []</span>
@@ -865,7 +879,7 @@ Figure&nbsp;5: Similarity matrix
 </div>
 <section id="counting-each-name-for-control" class="level4">
 <h4 class="anchored" data-anchor-id="counting-each-name-for-control">Counting each Name for control</h4>
-<div id="3cadecd9" class="cell" data-execution_count="13">
+<div id="1d64b739" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>name_counts <span class="op">=</span> df_matches.groupby(<span class="st">'Name'</span>).size().reset_index(name<span class="op">=</span><span class="st">'Count'</span>)</span>
@@ -880,9 +894,50 @@ Figure&nbsp;5: Similarity matrix
 </section>
 <section id="building-the-matrix" class="level3">
 <h3 class="anchored" data-anchor-id="building-the-matrix">Building the matrix</h3>
-<p>Now i want a matrix of Name that count characters presents in the same chapter.</p>
+<p>Now i want a matrix of <strong>NamePattern</strong> that count characters presents in the same chapter.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>NamePattern1</th>
+<th>NamePattern2</th>
+<th>NamePattern3</th>
+<th>…</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>NamePattern1</strong></td>
+<td>4</td>
+<td>0</td>
+<td>2</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>NamePattern2</strong></td>
+<td>0</td>
+<td>3</td>
+<td>5</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><strong>NamePattern3</strong></td>
+<td>2</td>
+<td>5</td>
+<td>3</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>…</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <p>The following code took <strong>12 hours (!)</strong> to complete on my laptop. ⬇️</p>
-<div id="996786f1" class="cell" data-execution_count="14">
+<div id="818ffe71" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">""" UNCOMMENT TO REACTIVATE </span></span>
@@ -918,8 +973,8 @@ Figure&nbsp;5: Similarity matrix
 <pre><code>" UNCOMMENT TO REACTIVATE \n\nimport pandas as pd\nimport numpy as np\n\n# Get unique NamePatterns\nname_patterns = df_matches['NamePattern'].unique()\n\n# Initialize the matrix with zeros\nmatrix = pd.DataFrame(0, index=name_patterns, columns=name_patterns)\n\n# Iterate through each pair of matches\nfor i, row_i in df_matches.iterrows():\n    for j, row_j in df_matches.iterrows():\n        if i &gt;= j:\n            continue  # Avoid duplicate and self comparisons\n\n        # Check if in same chapter\n        if row_i['Chapter_num'] == row_j['Chapter_num']:\n            # Check if within +/- 20 positions\n            if abs(row_i['Position'] - row_j['Position']) &lt;= 20:\n                matrix.loc[row_i['NamePattern'], row_j['NamePattern']] += 1\n                matrix.loc[row_j['NamePattern'], row_i['NamePattern']] += 1  # symmetric\n                \n# Export for control\nmatrix.to_csv('temp/matrix_proximity.csv', index=True)\n\n"</code></pre>
 </div>
 </div>
-<p>Reading the csv previously generated into matrix (to avoid recalculating)</p>
-<div id="48dbb2c1" class="cell" data-execution_count="15">
+<p>Reading the csv previously generated (to avoid recalculating)</p>
+<div id="f4af36e4" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -928,8 +983,8 @@ Figure&nbsp;5: Similarity matrix
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>matrix <span class="op">=</span> pd.read_csv(<span class="st">'temp/matrix_proximity.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Finalizing counting of proximity</p>
-<div id="263306a0" class="cell" data-execution_count="16">
+<p>Finalizing counting of proximity by merging the <strong>NamePattern</strong> (adding their values) depending on their respective <strong>Name</strong>.</p>
+<div id="2d368290" class="cell" data-execution_count="16">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace NamePattern by the associated Name</span></span>
@@ -957,8 +1012,8 @@ Figure&nbsp;5: Similarity matrix
 <span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>matrix_renamed.to_csv(<span class="st">'temp/matrix_renamed_proximity.csv'</span>, index<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Just keep the highest 20</p>
-<div id="f1d15f53" class="cell" data-execution_count="17">
+<p>Keeping only the highest 20 most proximities</p>
+<div id="92ef8a82" class="cell" data-execution_count="17">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute sum for each row/column</span></span>
@@ -978,6 +1033,7 @@ Figure&nbsp;5: Similarity matrix
 </section>
 <section id="drawing-a-heatmap-1" class="level3">
 <h3 class="anchored" data-anchor-id="drawing-a-heatmap-1">Drawing a heatmap</h3>
+<p>It represents the proximity between characters throughout the entire novel. We observe that Jia Baoyu interacts more frequently with Lin Daiyu than with Xue Baochai. He also has numerous interactions with Grandmother Jia, Lady Wang, and Jia Xiren.</p>
 <div id="cell-proximity-of-characters" class="cell" data-execution_count="18">
 <details class="code-fold">
 <summary>Code</summary>

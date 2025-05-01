@@ -7,15 +7,13 @@ author:
         orcid: "0000-0003-0122-5300"
         affiliation: "Independent researcher"
 date: "2025-04-24"
-abstract: "Data visualization of the three main protagonists of 红楼梦 (Dream of the Red Chamber), a classic of Chinese literature. It represents their mentions along the 120 chapters of the novel."
+abstract: "This paper presents data visualizations focusing on the three main protagonists of Dream of the Red Chamber (红楼梦), a classic work of Chinese literature. It presents the results of some experiments I conducted using Python in a Quarto environment with Jupyter."
 keywords: "dataviz; data visualization; Dream of the Red Chamber; 红楼梦"
 ---
 
 ## Introduction
 
-It's a data visualization of the three main protagonists of 红楼梦 ([*Dream of the Red Chamber*](https://en.wikipedia.org/wiki/Dream_of_the_Red_Chamber)), a classic of Chinese literature. It represents their mentions along the 120 chapters of the novel.
-
-This page is the result of some experimentations I made to try Python in a Quarto environment with jupyter.
+This paper presents data visualizations focusing on the three main protagonists of [*Dream of the Red Chamber*](https://en.wikipedia.org/wiki/Dream_of_the_Red_Chamber) (*红楼梦*), a classic work of Chinese literature. It presents the results of some experiments I conducted using Python in a Quarto environment with Jupyter.
 
 ## Importing data
 
@@ -32,9 +30,9 @@ with open("data/fulltext_simplified.txt", "r", encoding="utf-8") as file:
 
 Putting the content into a panda dataframe and shampooing the data :
 
-| Chapter_num | Chapter | RawContent |
-|-------------|---------|------------|
-|             |         |            |
+| Chapter_num | Chapter                              | RawContent               |
+|---------------|---------------------------------|------------------------|
+| integer     | extracted from header of the chapter | full text of the chapter |
 
 ```{python}
 #| code-fold: true
@@ -84,6 +82,8 @@ df_cn.to_csv('temp/output_rawdata.csv', index=False)
 ## How many times the 3 main protogonists are mentioned
 
 ### Counting
+
+We construct a list of name variants and synonyms for the three main protagonists—Jia Baoyu, Lin Daiyu, and Xue Baochai—and quantify their occurrences throughout the 120 chapters.
 
 ```{python}
 #| code-fold: true
@@ -138,7 +138,7 @@ df_cn['count_XueBaochai'] = df_cn['RawContent'].str.count(xue_baochai_pattern)
 
 ### Drawing a heatmap
 
-Plotting a heatmap for all the chapters with a different color intensity depending on how many times one of the three main protagonists are mentioned.
+A chapter-by-chapter heatmap is generated, where color intensity corresponds to the frequency of mentions of any of the three main protagonists.
 
 ```{python}
 #| label: fig-threemain
@@ -189,6 +189,8 @@ plt.show()
 ```
 
 ### Drawing a stacked bars graph
+
+It’s not very readable, but it gives a rough idea of which parts of the novel involve interactions between the protagonists.
 
 ```{python}
 #| label: fig-threemain-bars1
@@ -271,11 +273,11 @@ plt.show()
 
 ```
 
-## How many times pairs of protagonists are mentioned together
+## Number of times each pair of protagonists is mentioned together
 
 ### Counting
 
-Threshold (maximum distance between names mentioned) = 20 words.
+Threshold (maximum distance between two names mentioned) = 20 words.
 
 ```{python}
 #| code-fold: true
@@ -368,15 +370,17 @@ plt.savefig('images/pairs_characters_hlm.png', dpi=300, bbox_inches='tight')
 plt.show()
 ```
 
-## Changing the counting method
+## Expanding the visualizations to other characters of the novel
+
+### Changing the counting method
 
 From now on, I will not use manual synonyms like before because it's too heavy for managing a high number of characters.
 
-From [lileslll](https://github.com/lileslll/Dream_of_the_Red_Chamber_Character_Analysis/), I found the file **userdict.json** : contains 165 characters of the novel and theirs nicknames... I rename it **userdict_simplified.json**.
+From [lileslll](https://github.com/lileslll/Dream_of_the_Red_Chamber_Character_Analysis/), I found the file `userdict.json`. It contains 165 characters of the novel and theirs nicknames... I rename it `userdict_simplified.json`.
 
-## Similarity matrix
+### First simple similarity matrix
 
-I remove from the corpus all the words that are not in **userdict_simplified.json**. Like that, we can built a similarity matrix based on the characters in each chapters.
+I filter the corpus by removing all words not found in `userdict_simplified.json`, allowing us to build a simple similarity matrix based solely on the characters mentioned in each chapter.
 
 ```{python}
 #| label: fig-similarity
@@ -449,7 +453,7 @@ plt.show()
 
 ## Who are the most mentioned characters ?
 
-Put the **userdic_simplified** into a df with two columns : **Name** and **NamePattern**.
+Put the **userdic_simplified** into a dataframe with two columns : **Name** and **NamePattern**.
 
 ### Structure of the JSON (sample)
 
@@ -467,7 +471,7 @@ Put the **userdic_simplified** into a df with two columns : **Name** and **NameP
         "林黛玉",            
 ```
 
-The first key will be **Name** and the second key will be **NamePattern**.
+The first key will be **Name** and the second key will be **NamePattern**. These keys become the columns of the dataframe. A 3rd column, **Count**, stores the number of mentions.
 
 | Name   | NamePattern | Count |
 |--------|-------------|-------|
@@ -524,6 +528,8 @@ total_per_Name.to_csv('temp/total_per_Name.csv', index=False)
 
 ### Drawing a bar graph
 
+To improve readability, I display the results of the count using a simple visualization, showing only the top 20 most frequently mentioned characters.
+
 ```{python}
 #| label: most-mentioned-characters
 #| fig-cap: "Most mentioned characters"
@@ -565,9 +571,11 @@ plt.show()
 
 ## A network graph of all the relations between 20 most mentioned characters
 
-### Counting the positions
+That's ambitious. I will count how many times a pair of characters (*story* characters) are mentioned together. I choose a threshold of 20 characters (*written* characters) between two mentioned names.
 
-Expanding **userdict_simplified.json** to add all the positions of each matches.
+### Retrieving the match positions
+
+Expanding **userdict_simplified.json** to add the **Chapter_num** where the **NamePattern** is mentioned and the numerical **position** of each match.
 
 | Name   | NamePattern | Chapter_num | Position in RawContent |
 |--------|-------------|-------------|------------------------|
@@ -624,7 +632,14 @@ Checked ✅
 
 ### Building the matrix
 
-Now i want a matrix of Name that count characters presents in the same chapter.
+Now i want a matrix of **NamePattern** that count characters presents in the same chapter.
+
+|                  | NamePattern1 | NamePattern2 | NamePattern3 | ... |
+|------------------|--------------|--------------|--------------|-----|
+| **NamePattern1** | 4            | 0            | 2            |     |
+| **NamePattern2** | 0            | 3            | 5            |     |
+| **NamePattern3** | 2            | 5            | 3            |     |
+| **...**          |              |              |              |     |
 
 The following code took **12 hours (!)** to complete on my laptop. ⬇️
 
@@ -661,7 +676,7 @@ matrix.to_csv('temp/matrix_proximity.csv', index=True)
 """
 ```
 
-Reading the csv previously generated into matrix (to avoid recalculating)
+Reading the csv previously generated (to avoid recalculating)
 
 ```{python}
 #| code-fold: true
@@ -672,7 +687,7 @@ import pandas as pd
 matrix = pd.read_csv('temp/matrix_proximity.csv', index_col=0)
 ```
 
-Finalizing counting of proximity
+Finalizing counting of proximity by merging the **NamePattern** (adding their values) depending on their respective **Name**.
 
 ```{python}
 #| code-fold: true
@@ -702,7 +717,7 @@ np.fill_diagonal(matrix_renamed.values, 0)
 matrix_renamed.to_csv('temp/matrix_renamed_proximity.csv', index=True)
 ```
 
-Just keep the highest 20
+Keeping only the highest 20 most proximities
 
 ```{python}
 #| code-fold: true
@@ -722,6 +737,8 @@ matrix_renamed20.to_csv('temp/matrix_renamed20_proximity.csv', index=True)
 ```
 
 ### Drawing a heatmap
+
+It represents the proximity between characters throughout the entire novel. We observe that Jia Baoyu interacts more frequently with Lin Daiyu than with Xue Baochai. He also has numerous interactions with Grandmother Jia, Lady Wang, and Jia Xiren.
 
 ```{python}
 #| label: proximity-of-characters
