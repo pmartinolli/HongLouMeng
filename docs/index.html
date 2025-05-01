@@ -133,7 +133,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#counting-1" id="toc-counting-1" class="nav-link" data-scroll-target="#counting-1">Counting</a></li>
   <li><a href="#drawing" id="toc-drawing" class="nav-link" data-scroll-target="#drawing">Drawing</a></li>
   </ul></li>
-  <li><a href="#change-of-method-of-counting" id="toc-change-of-method-of-counting" class="nav-link" data-scroll-target="#change-of-method-of-counting">Change of method of counting</a></li>
+  <li><a href="#changing-the-counting-method" id="toc-changing-the-counting-method" class="nav-link" data-scroll-target="#changing-the-counting-method">Changing the counting method</a></li>
   <li><a href="#similarity-matrix" id="toc-similarity-matrix" class="nav-link" data-scroll-target="#similarity-matrix">Similarity matrix</a></li>
   <li><a href="#who-are-the-most-mentioned-characters" id="toc-who-are-the-most-mentioned-characters" class="nav-link" data-scroll-target="#who-are-the-most-mentioned-characters">Who are the most mentioned characters ?</a>
   <ul class="collapse">
@@ -210,7 +210,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="importing-data" class="level2">
 <h2 class="anchored" data-anchor-id="importing-data">Importing data</h2>
 <p>Importing <strong>fulltext_simplified.txt</strong>, a text file retrieved from <a href="https://github.com/lileslll/Dream_of_the_Red_Chamber_Character_Analysis">lilesIII</a>. It is written with simplified chinese characters.</p>
-<div id="5245fb9a" class="cell" data-execution_count="1">
+<div id="3a297b9c" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The echo: false option disables the printing of code (only output is displayed).</span></span>
@@ -241,7 +241,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="how-many-times-the-3-main-protogonists-are-mentioned">How many times the 3 main protogonists are mentioned</h2>
 <section id="counting" class="level3">
 <h3 class="anchored" data-anchor-id="counting">Counting</h3>
-<div id="489cbdbd" class="cell" data-execution_count="3">
+<div id="a9d4a7d3" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count how many times the three main protagonists are counted in RawContent</span></span>
@@ -460,9 +460,7 @@ Figure&nbsp;3: Three Main Protagonists
 <section id="counting-1" class="level3">
 <h3 class="anchored" data-anchor-id="counting-1">Counting</h3>
 <p>Threshold (maximum distance between names mentioned) = 20 words.</p>
-<div id="fig-pairs" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="7">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-pairs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="2ee89283" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count how many times there is a jia_baoyu_synonyms AND a lin_daiyu_synonyms within 20/threshold characters.</span></span>
@@ -513,15 +511,12 @@ Figure&nbsp;3: Three Main Protagonists
 <span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>df_cn[<span class="st">'LinDaiyu_XueBaochai'</span>] <span class="op">=</span> df_cn[<span class="st">'RawContent'</span>].<span class="bu">apply</span>(count_lin_xue_pairs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-pairs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4
-</figcaption>
-</figure>
-</div>
 </section>
 <section id="drawing" class="level3">
 <h3 class="anchored" data-anchor-id="drawing">Drawing</h3>
-<div id="21bb11d7" class="cell" data-execution_count="8">
+<div id="cell-fig-pairs" class="cell" data-execution_count="8">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set Chapter_num as index for labeling rows in the heatmap</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>heatmap_data <span class="op">=</span> df_cn.set_index(<span class="st">'Chapter_num'</span>)[[<span class="st">'JiaBaoyu_LinDaiyu'</span>, <span class="st">'JiaBaoyu_XueBaochai'</span>,<span class="st">'LinDaiyu_XueBaochai'</span>]]</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -550,35 +545,36 @@ Figure&nbsp;4
 <span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'images/pairs_characters_hlm.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
 <span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/cell-9-output-1.png" width="869" height="567" class="figure-img"></p>
+<div id="fig-pairs" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pairs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-pairs-output-1.png" width="869" height="567" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pairs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Pairs of Two Protagonists
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
 </section>
-<section id="change-of-method-of-counting" class="level2">
-<h2 class="anchored" data-anchor-id="change-of-method-of-counting">Change of method of counting</h2>
-<p>I don’t use manual synonyms like before because its too heavy for a big number of characters. From <a href="https://github.com/lileslll/Dream_of_the_Red_Chamber_Character_Analysis/">lileslll</a>, I found the file <strong>userdict.json</strong> : contains 165 characters of the novel and theirs nicknames… I rename it <strong>userdict_simplified.json</strong>.</p>
+<section id="changing-the-counting-method" class="level2">
+<h2 class="anchored" data-anchor-id="changing-the-counting-method">Changing the counting method</h2>
+<p>From now on, I will not use manual synonyms like before because it’s too heavy for managing a high number of characters.</p>
+<p>From <a href="https://github.com/lileslll/Dream_of_the_Red_Chamber_Character_Analysis/">lileslll</a>, I found the file <strong>userdict.json</strong> : contains 165 characters of the novel and theirs nicknames… I rename it <strong>userdict_simplified.json</strong>.</p>
 </section>
 <section id="similarity-matrix" class="level2">
 <h2 class="anchored" data-anchor-id="similarity-matrix">Similarity matrix</h2>
 <p>I remove from the corpus all the words that are not in <strong>userdict_simplified.json</strong>. Like that, we can built a similarity matrix based on the characters in each chapters.</p>
 <div id="cell-fig-similarity" class="cell" data-execution_count="9">
-<div class="cell-output cell-output-stderr">
-<pre><code>Building prefix dict from the default dictionary ...
-Loading model from cache C:\Users\martinop\AppData\Local\Temp\jieba.cache
-Loading model cost 1.179 seconds.
-Prefix dict has been built successfully.</code></pre>
-</div>
 <div class="cell-output cell-output-display">
 <div id="fig-similarity" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-similarity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="index_files/figure-html/fig-similarity-output-2.png" width="1055" height="950" class="figure-img">
+<img src="index_files/figure-html/fig-similarity-output-1.png" width="1055" height="950" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-similarity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;5: Similarity matrix
@@ -593,17 +589,17 @@ Figure&nbsp;5: Similarity matrix
 <p>Put the <strong>userdic_simplified</strong> into a df with two columns : <strong>Name</strong> and <strong>NamePattern</strong>.</p>
 <section id="structure-of-the-json-sample" class="level3">
 <h3 class="anchored" data-anchor-id="structure-of-the-json-sample">Structure of the JSON (sample)</h3>
-<div class="sourceCode" id="cb9"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"贾宝玉"</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"贾宝玉"</span><span class="ot">,</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"宝玉"</span><span class="ot">,</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"宝二爷"</span><span class="ot">,</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"怡红公子"</span><span class="ot">,</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"绛洞花主"</span><span class="ot">,</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"宝兄弟"</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"林黛玉"</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"林黛玉"</span><span class="ot">,</span>            </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"贾宝玉"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"贾宝玉"</span><span class="ot">,</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"宝玉"</span><span class="ot">,</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"宝二爷"</span><span class="ot">,</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"怡红公子"</span><span class="ot">,</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"绛洞花主"</span><span class="ot">,</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"宝兄弟"</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"林黛玉"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"林黛玉"</span><span class="ot">,</span>            </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The first key will be <strong>Name</strong> and the second key will be <strong>NamePattern</strong>.</p>
 <table class="caption-top table">
 <thead>
@@ -635,86 +631,10 @@ Figure&nbsp;5: Similarity matrix
 <section id="drawing-a-bar-graph" class="level3">
 <h3 class="anchored" data-anchor-id="drawing-a-bar-graph">Drawing a bar graph</h3>
 <div id="cell-most-mentioned-characters" class="cell" data-execution_count="11">
-<div class="cell-output cell-output-stderr">
-<pre><code>C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 36158 (\N{CJK UNIFIED IDEOGRAPH-8D3E}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 23453 (\N{CJK UNIFIED IDEOGRAPH-5B9D}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 29577 (\N{CJK UNIFIED IDEOGRAPH-7389}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 27597 (\N{CJK UNIFIED IDEOGRAPH-6BCD}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 29579 (\N{CJK UNIFIED IDEOGRAPH-738B}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 29081 (\N{CJK UNIFIED IDEOGRAPH-7199}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 20964 (\N{CJK UNIFIED IDEOGRAPH-51E4}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 26519 (\N{CJK UNIFIED IDEOGRAPH-6797}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 40667 (\N{CJK UNIFIED IDEOGRAPH-9EDB}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 34203 (\N{CJK UNIFIED IDEOGRAPH-859B}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 38039 (\N{CJK UNIFIED IDEOGRAPH-9497}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 34989 (\N{CJK UNIFIED IDEOGRAPH-88AD}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 20154 (\N{CJK UNIFIED IDEOGRAPH-4EBA}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 22827 (\N{CJK UNIFIED IDEOGRAPH-592B}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 25919 (\N{CJK UNIFIED IDEOGRAPH-653F}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 29711 (\N{CJK UNIFIED IDEOGRAPH-740F}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 24179 (\N{CJK UNIFIED IDEOGRAPH-5E73}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 20799 (\N{CJK UNIFIED IDEOGRAPH-513F}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 21490 (\N{CJK UNIFIED IDEOGRAPH-53F2}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 28248 (\N{CJK UNIFIED IDEOGRAPH-6E58}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 20113 (\N{CJK UNIFIED IDEOGRAPH-4E91}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 25506 (\N{CJK UNIFIED IDEOGRAPH-63A2}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 26149 (\N{CJK UNIFIED IDEOGRAPH-6625}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 23016 (\N{CJK UNIFIED IDEOGRAPH-59E8}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 22920 (\N{CJK UNIFIED IDEOGRAPH-5988}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 23588 (\N{CJK UNIFIED IDEOGRAPH-5C24}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 27663 (\N{CJK UNIFIED IDEOGRAPH-6C0F}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 32043 (\N{CJK UNIFIED IDEOGRAPH-7D2B}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 40515 (\N{CJK UNIFIED IDEOGRAPH-9E43}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 40499 (\N{CJK UNIFIED IDEOGRAPH-9E33}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 40495 (\N{CJK UNIFIED IDEOGRAPH-9E2F}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 29645 (\N{CJK UNIFIED IDEOGRAPH-73CD}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 26446 (\N{CJK UNIFIED IDEOGRAPH-674E}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 32424 (\N{CJK UNIFIED IDEOGRAPH-7EA8}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 37026 (\N{CJK UNIFIED IDEOGRAPH-90A2}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 26228 (\N{CJK UNIFIED IDEOGRAPH-6674}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()
-C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarning: Glyph 38639 (\N{CJK UNIFIED IDEOGRAPH-96EF}) missing from font(s) DejaVu Sans.
-  plt.tight_layout()</code></pre>
-</div>
 <div class="cell-output cell-output-display">
 <div id="most-mentioned-characters" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="index_files/figure-html/most-mentioned-characters-output-2.png" width="1158" height="756" class="figure-img"></p>
+<p><img src="index_files/figure-html/most-mentioned-characters-output-1.png" width="1158" height="756" class="figure-img"></p>
 <figcaption>Most mentioned characters</figcaption>
 </figure>
 </div>
@@ -757,98 +677,33 @@ C:\Users\martinop\AppData\Local\Temp\ipykernel_2144\2309416419.py:29: UserWarnin
 </tr>
 </tbody>
 </table>
-<div id="b8999e22" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> []</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Iterate over each row in df</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, row <span class="kw">in</span> df_cn.iterrows():</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    chapter_num <span class="op">=</span> row[<span class="st">'Chapter_num'</span>]</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    raw_content <span class="op">=</span> row[<span class="st">'RawContent'</span>]</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Check each keyword pattern against this content</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _, kw_row <span class="kw">in</span> df_keywords.iterrows():</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>        name <span class="op">=</span> kw_row[<span class="st">'Name'</span>]</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>        pattern <span class="op">=</span> kw_row[<span class="st">'NamePattern'</span>]</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Find all matches of the pattern in the content</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> match <span class="kw">in</span> re.finditer(re.escape(pattern), raw_content):</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>            results.append({</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>                <span class="st">'Name'</span>: name,</span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>                <span class="st">'NamePattern'</span>: pattern,</span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>                <span class="st">'Chapter_num'</span>: chapter_num,</span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>                <span class="st">'Position'</span>: match.start()</span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>            })</span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the results into a new DataFrame</span></span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>df_matches <span class="op">=</span> pd.DataFrame(results)</span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_matches)</span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Export for control</span></span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>df_matches.to_csv(<span class="st">'temp/count_char_position.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>      Name NamePattern  Chapter_num  Position
-0      贾宝玉          宝玉            1      4127
-1       香菱          英莲            1      3093
-2       香菱          英莲            1      4293
-3       香菱          英莲            1      4409
-4       香菱          英莲            1      6446
-...    ...         ...          ...       ...
-28232   琪官         蒋玉菡          120      5106
-28233   琪官         蒋玉菡          120      5126
-28234   贾兰          贾兰          120       761
-28235   贾兰          贾兰          120      2253
-28236   贾兰          贾兰          120      2262
-
-[28237 rows x 4 columns]</code></pre>
-</div>
-</div>
 <section id="counting-each-name-for-control" class="level4">
 <h4 class="anchored" data-anchor-id="counting-each-name-for-control">Counting each Name for control</h4>
-<div id="20adad02" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>name_counts <span class="op">=</span> df_matches.groupby(<span class="st">'Name'</span>).size().reset_index(name<span class="op">=</span><span class="st">'Count'</span>)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>name_counts <span class="op">=</span> name_counts.sort_values(by<span class="op">=</span><span class="st">'Count'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(name_counts)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(total_per_Name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>    Name  Count
-128  贾宝玉   4138
-133   贾母   2731
-81   王熙凤   2347
-69   林黛玉   1904
-117  薛宝钗   1272
-..   ...    ...
-107   茄官      1
-123   豆童      1
-114   蕊珠      1
-104   良儿      1
-125  贾代善      1
-
-[156 rows x 2 columns]
-    Name  Count
-135  贾宝玉   4138
-140   贾母   2731
-86   王熙凤   2347
-70   林黛玉   1904
-124  薛宝钗   1272
-..   ...    ...
-84   王妈妈      0
-75    栓儿      0
-104   绣橘      0
-156  银蝶儿      0
-160   青芸      0
-
-[165 rows x 2 columns]</code></pre>
-</div>
-</div>
 <p>Checked ✅</p>
 </section>
 </section>
 <section id="building-the-matrix" class="level3">
 <h3 class="anchored" data-anchor-id="building-the-matrix">Building the matrix</h3>
 <p>Now i want a matrix of Name that count characters presents in the same chapter.</p>
-<p>((under contruction))</p>
+<p>The following code took <strong>12 hours (!)</strong> to complete on my laptop. ⬇️</p>
+<div id="1fd0ca97" class="cell" data-execution_count="14">
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>" UNCOMMENT TO REACTIVATE \n\nimport pandas as pd\nimport numpy as np\n\n# Get unique NamePatterns\nname_patterns = df_matches['NamePattern'].unique()\n\n# Initialize the matrix with zeros\nmatrix = pd.DataFrame(0, index=name_patterns, columns=name_patterns)\n\n# Iterate through each pair of matches\nfor i, row_i in df_matches.iterrows():\n    for j, row_j in df_matches.iterrows():\n        if i &gt;= j:\n            continue  # Avoid duplicate and self comparisons\n\n        # Check if in same chapter\n        if row_i['Chapter_num'] == row_j['Chapter_num']:\n            # Check if within +/- 20 positions\n            if abs(row_i['Position'] - row_j['Position']) &lt;= 20:\n                matrix.loc[row_i['NamePattern'], row_j['NamePattern']] += 1\n                matrix.loc[row_j['NamePattern'], row_i['NamePattern']] += 1  # symmetric\n                \n# Export for control\nmatrix.to_csv('temp/matrix_proximity.csv', index=True)\n\n"</code></pre>
+</div>
+</div>
+<p>Reading the csv previously generated into matrix (to avoid recalculating)</p>
+<p>Finalizing counting of proximity</p>
+<p>Just keep the highest 20</p>
+<p>Drawing a heatmap</p>
+<div id="60053183" class="cell" data-execution_count="18">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-19-output-1.png" width="1062" height="947" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 </section>
 <section id="inspirations-and-further-readings" class="level2">

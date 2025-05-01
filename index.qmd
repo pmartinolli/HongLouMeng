@@ -278,8 +278,6 @@ plt.show()
 Threshold (maximum distance between names mentioned) = 20 words.
 
 ```{python}
-#| label: fig-pairs
-#| fig-cap: "Pairs of Two Protagonists"
 #| code-fold: true
 
 
@@ -336,6 +334,9 @@ df_cn['LinDaiyu_XueBaochai'] = df_cn['RawContent'].apply(count_lin_xue_pairs)
 ### Drawing
 
 ```{python}
+#| code-fold: true
+#| label: fig-pairs
+#| fig-cap: "Pairs of Two Protagonists"
 
 # Set Chapter_num as index for labeling rows in the heatmap
 heatmap_data = df_cn.set_index('Chapter_num')[['JiaBaoyu_LinDaiyu', 'JiaBaoyu_XueBaochai','LinDaiyu_XueBaochai']]
@@ -367,9 +368,11 @@ plt.savefig('images/pairs_characters_hlm.png', dpi=300, bbox_inches='tight')
 plt.show()
 ```
 
-## Change of method of counting
+## Changing the counting method
 
-I don't use manual synonyms like before because its too heavy for a big number of characters. From [lileslll](https://github.com/lileslll/Dream_of_the_Red_Chamber_Character_Analysis/), I found the file **userdict.json** : contains 165 characters of the novel and theirs nicknames... I rename it **userdict_simplified.json**.
+From now on, I will not use manual synonyms like before because it's too heavy for managing a high number of characters.
+
+From [lileslll](https://github.com/lileslll/Dream_of_the_Red_Chamber_Character_Analysis/), I found the file **userdict.json** : contains 165 characters of the novel and theirs nicknames... I rename it **userdict_simplified.json**.
 
 ## Similarity matrix
 
@@ -380,6 +383,7 @@ I remove from the corpus all the words that are not in **userdict_simplified.jso
 #| fig-cap: "Similarity matrix"
 #| code-fold: true
 #| echo: false
+#| warning: false
 
 import jieba
 import json
@@ -450,7 +454,7 @@ Put the **userdic_simplified** into a df with two columns : **Name** and **NameP
 
 ### Structure of the JSON (sample)
 
-``` JSON
+``` json
 {
     "贾宝玉": [
         "贾宝玉",
@@ -475,6 +479,7 @@ The first key will be **Name** and the second key will be **NamePattern**.
 ```{python}
 #| echo: false
 #| code-fold: true
+#| warning: false
 
 import json
 import pandas as pd
@@ -527,6 +532,7 @@ total_per_Name.to_csv('temp/total_per_Name.csv', index=False)
 #| fig-cap: "Most mentioned characters"
 #| code-fold: true
 #| echo: false
+#| warning: false
 
 import matplotlib.pyplot as plt
 
@@ -575,6 +581,9 @@ Expanding **userdict_simplified.json** to add all the positions of each matches.
 | ...    | ...         |             |                        |
 
 ```{python}
+#| code-fold: true
+#| echo: false
+#| warning: false
 
 results = []
 
@@ -600,7 +609,7 @@ for i, row in df_cn.iterrows():
 # Convert the results into a new DataFrame
 df_matches = pd.DataFrame(results)
 
-print(df_matches)
+#print(df_matches)
 
 # Export for control
 df_matches.to_csv('temp/count_char_position.csv', index=False)
@@ -609,12 +618,15 @@ df_matches.to_csv('temp/count_char_position.csv', index=False)
 #### Counting each Name for control
 
 ```{python}
+#| code-fold: true
+#| echo: false
+#| warning: false
 
 name_counts = df_matches.groupby('Name').size().reset_index(name='Count')
 name_counts = name_counts.sort_values(by='Count', ascending=False)
 
-print(name_counts)
-print(total_per_Name)
+#print(name_counts)
+#print(total_per_Name)
 ```
 
 Checked ✅
@@ -623,7 +635,143 @@ Checked ✅
 
 Now i want a matrix of Name that count characters presents in the same chapter.
 
-((under contruction))
+The following code took **12 hours (!)** to complete on my laptop. ⬇️
+
+```{python}
+#| code-fold: true
+#| echo: false
+#| warning: false
+
+""" UNCOMMENT TO REACTIVATE 
+
+import pandas as pd
+import numpy as np
+
+# Get unique NamePatterns
+name_patterns = df_matches['NamePattern'].unique()
+
+# Initialize the matrix with zeros
+matrix = pd.DataFrame(0, index=name_patterns, columns=name_patterns)
+
+# Iterate through each pair of matches
+for i, row_i in df_matches.iterrows():
+    for j, row_j in df_matches.iterrows():
+        if i >= j:
+            continue  # Avoid duplicate and self comparisons
+
+        # Check if in same chapter
+        if row_i['Chapter_num'] == row_j['Chapter_num']:
+            # Check if within +/- 20 positions
+            if abs(row_i['Position'] - row_j['Position']) <= 20:
+                matrix.loc[row_i['NamePattern'], row_j['NamePattern']] += 1
+                matrix.loc[row_j['NamePattern'], row_i['NamePattern']] += 1  # symmetric
+                
+# Export for control
+matrix.to_csv('temp/matrix_proximity.csv', index=True)
+
+"""
+```
+
+Reading the csv previously generated into matrix (to avoid recalculating)
+
+```{python}
+#| code-fold: true
+#| echo: false
+#| warning: false
+
+import pandas as pd
+
+# Load the matrix from CSV
+matrix = pd.read_csv('temp/matrix_proximity.csv', index_col=0)
+```
+
+Finalizing counting of proximity
+
+```{python}
+#| code-fold: true
+#| echo: false
+#| warning: false
+
+# Replace NamePattern by the associated Name
+
+# Create mapping from NamePattern to Name
+name_map = df_matches.drop_duplicates('NamePattern').set_index('NamePattern')['Name']
+
+matrix_renamed = matrix
+
+# Rename rows and columns
+matrix_renamed.rename(index=name_map, columns=name_map, inplace=True)
+
+# Merge all identical Name rows and columns to aggregate the previous synonimous in NamePattern
+
+# Group and sum rows with the same name
+matrix_renamed = matrix_renamed.groupby(level=0).sum()
+
+# Group and sum columns with the same name (use transpose instead of axis=1)
+matrix_renamed = matrix_renamed.T.groupby(level=0).sum().T
+
+# Give a value of 0 for the intersection of column = row
+np.fill_diagonal(matrix_renamed.values, 0)
+
+# Export for control
+matrix_renamed.to_csv('temp/matrix_renamed_proximity.csv', index=True)
+```
+
+Just keep the highest 20
+
+```{python}
+#| code-fold: true
+#| echo: false
+#| warning: false
+
+# Compute sum for each row/column
+row_sums = matrix_renamed.sum(axis=1)
+col_sums = matrix_renamed.sum(axis=0)
+
+# Get top 20 names by total connections
+top_names = row_sums.add(col_sums, fill_value=0).sort_values(ascending=False).head(20).index
+
+# Filter matrix to top 20 rows and columns
+matrix_renamed20 = matrix_renamed.loc[top_names, top_names]
+
+# Export for control
+matrix_renamed20.to_csv('temp/matrix_renamed20_proximity.csv', index=True)
+```
+
+Drawing a heatmap
+
+```{python}
+#| code-fold: true
+#| echo: false
+#| warning: false
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
+
+# Use SimHei font for Chinese support on Windows
+font_path = "C:/Windows/Fonts/simhei.ttf"
+zh_font = fm.FontProperties(fname=font_path)
+
+# Set up the figure
+plt.figure(figsize=(12, 10))
+
+# Draw the heatmap
+sns.heatmap(matrix_renamed20, cmap='Reds', linewidths=0.5, square=True, annot=True, fmt='d')
+
+# Add title and axis labels
+plt.title("Co-occurrence Heatmap (Top 20 Names)", fontsize=16, fontproperties=zh_font)
+plt.xlabel("Name", fontproperties=zh_font)
+plt.ylabel("Name", fontproperties=zh_font)
+
+# Set tick labels with Chinese font
+plt.xticks(rotation=45, ha='right', fontproperties=zh_font)
+plt.yticks(rotation=0, fontproperties=zh_font)
+
+plt.tight_layout()
+plt.show()
+
+```
 
 ## Inspirations and further readings
 
