@@ -382,8 +382,6 @@ I remove from the corpus all the words that are not in **userdict_simplified.jso
 #| label: fig-similarity
 #| fig-cap: "Similarity matrix"
 #| code-fold: true
-#| echo: false
-#| warning: false
 
 import jieba
 import json
@@ -441,11 +439,12 @@ sns.heatmap(similarity_df,
             linewidths=0.2)
 
 plt.title("Chapter Similarity Matrix (based on a selection of characters)")
-plt.xlabel("Chapters")
+plt.xlabel("Chapters", ha='right')
 plt.ylabel("Chapters")
 plt.tight_layout()
 plt.savefig('images/similarity_matrix2.png', dpi=300, bbox_inches='tight')
 plt.show()
+
 ```
 
 ## Who are the most mentioned characters ?
@@ -477,9 +476,7 @@ The first key will be **Name** and the second key will be **NamePattern**.
 | 贾宝玉 | 宝二爷      |       |
 
 ```{python}
-#| echo: false
 #| code-fold: true
-#| warning: false
 
 import json
 import pandas as pd
@@ -531,8 +528,6 @@ total_per_Name.to_csv('temp/total_per_Name.csv', index=False)
 #| label: most-mentioned-characters
 #| fig-cap: "Most mentioned characters"
 #| code-fold: true
-#| echo: false
-#| warning: false
 
 import matplotlib.pyplot as plt
 
@@ -562,7 +557,7 @@ plt.xlabel("Count", fontproperties=zh_font)
 plt.ylabel("Name", fontproperties=zh_font)
 plt.title("Top 20 Most Mentioned Names")
 plt.gca().invert_yaxis()  # So the highest is at the top
-plt.tight_layout()
+#plt.tight_layout()
 plt.yticks(fontproperties=zh_font)
 plt.xticks(fontproperties=zh_font)
 plt.show()
@@ -582,8 +577,6 @@ Expanding **userdict_simplified.json** to add all the positions of each matches.
 
 ```{python}
 #| code-fold: true
-#| echo: false
-#| warning: false
 
 results = []
 
@@ -619,8 +612,6 @@ df_matches.to_csv('temp/count_char_position.csv', index=False)
 
 ```{python}
 #| code-fold: true
-#| echo: false
-#| warning: false
 
 name_counts = df_matches.groupby('Name').size().reset_index(name='Count')
 name_counts = name_counts.sort_values(by='Count', ascending=False)
@@ -639,8 +630,6 @@ The following code took **12 hours (!)** to complete on my laptop. ⬇️
 
 ```{python}
 #| code-fold: true
-#| echo: false
-#| warning: false
 
 """ UNCOMMENT TO REACTIVATE 
 
@@ -676,8 +665,6 @@ Reading the csv previously generated into matrix (to avoid recalculating)
 
 ```{python}
 #| code-fold: true
-#| echo: false
-#| warning: false
 
 import pandas as pd
 
@@ -689,8 +676,6 @@ Finalizing counting of proximity
 
 ```{python}
 #| code-fold: true
-#| echo: false
-#| warning: false
 
 # Replace NamePattern by the associated Name
 
@@ -721,8 +706,6 @@ Just keep the highest 20
 
 ```{python}
 #| code-fold: true
-#| echo: false
-#| warning: false
 
 # Compute sum for each row/column
 row_sums = matrix_renamed.sum(axis=1)
@@ -738,11 +721,12 @@ matrix_renamed20 = matrix_renamed.loc[top_names, top_names]
 matrix_renamed20.to_csv('temp/matrix_renamed20_proximity.csv', index=True)
 ```
 
-Drawing a heatmap
+### Drawing a heatmap
 
 ```{python}
+#| label: proximity-of-characters
+#| fig-cap: "Heatmap of the characters proximity"
 #| code-fold: true
-#| echo: false
 #| warning: false
 
 import seaborn as sns
@@ -761,14 +745,14 @@ sns.heatmap(matrix_renamed20, cmap='Reds', linewidths=0.5, square=True, annot=Tr
 
 # Add title and axis labels
 plt.title("Co-occurrence Heatmap (Top 20 Names)", fontsize=16, fontproperties=zh_font)
-plt.xlabel("Name", fontproperties=zh_font)
+plt.xlabel("Name", ha='right', fontproperties=zh_font)
 plt.ylabel("Name", fontproperties=zh_font)
 
 # Set tick labels with Chinese font
 plt.xticks(rotation=45, ha='right', fontproperties=zh_font)
 plt.yticks(rotation=0, fontproperties=zh_font)
 
-plt.tight_layout()
+#plt.tight_layout()
 plt.show()
 
 ```
