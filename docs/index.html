@@ -213,7 +213,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="importing-data" class="level2">
 <h2 class="anchored" data-anchor-id="importing-data">Importing data</h2>
 <p>Importing <strong>fulltext_simplified.txt</strong>, a text file retrieved from <a href="https://github.com/lileslll/Dream_of_the_Red_Chamber_Character_Analysis">lilesIII</a>. It is written with simplified chinese characters.</p>
-<div id="74a9e615" class="cell" data-execution_count="1">
+<div id="197a072d" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The echo: false option disables the printing of code (only output is displayed).</span></span>
@@ -225,9 +225,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Putting the content into a panda dataframe and shampooing the data :</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 20%">
-<col style="width: 45%">
-<col style="width: 33%">
+<col style="width: 24%">
+<col style="width: 43%">
+<col style="width: 31%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -250,7 +250,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="counting" class="level3">
 <h3 class="anchored" data-anchor-id="counting">Counting</h3>
 <p>We construct a list of name variants and synonyms for the three main protagonists—Jia Baoyu, Lin Daiyu, and Xue Baochai—and quantify their occurrences throughout the 120 chapters.</p>
-<div id="38249612" class="cell" data-execution_count="3">
+<div id="c1f3d95c" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count how many times the three main protagonists are counted in RawContent</span></span>
@@ -470,7 +470,7 @@ Figure&nbsp;3: Three Main Protagonists
 <section id="counting-1" class="level3">
 <h3 class="anchored" data-anchor-id="counting-1">Counting</h3>
 <p>Threshold (maximum distance between two names mentioned) = 20 words.</p>
-<div id="6eb36575" class="cell" data-execution_count="7">
+<div id="c4ae1c63" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count how many times there is a jia_baoyu_synonyms AND a lin_daiyu_synonyms within 20/threshold characters.</span></span>
@@ -648,8 +648,8 @@ Figure&nbsp;4: Pairs of Two Protagonists
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Building prefix dict from the default dictionary ...
-Loading model from cache C:\Users\martinop\AppData\Local\Temp\jieba.cache
-Loading model cost 0.859 seconds.
+Dumping model to file cache C:\Users\martinop\AppData\Local\Temp\jieba.cache
+Loading model cost 0.890 seconds.
 Prefix dict has been built successfully.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
@@ -710,7 +710,7 @@ Figure&nbsp;5: Similarity matrix
 </tr>
 </tbody>
 </table>
-<div id="d0549897" class="cell" data-execution_count="10">
+<div id="7560028d" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
@@ -844,7 +844,7 @@ Figure&nbsp;5: Similarity matrix
 </tr>
 </tbody>
 </table>
-<div id="3b52c704" class="cell" data-execution_count="12">
+<div id="038046c9" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> []</span>
@@ -879,7 +879,7 @@ Figure&nbsp;5: Similarity matrix
 </div>
 <section id="counting-each-name-for-control" class="level4">
 <h4 class="anchored" data-anchor-id="counting-each-name-for-control">Counting each Name for control</h4>
-<div id="1d64b739" class="cell" data-execution_count="13">
+<div id="1baa612f" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>name_counts <span class="op">=</span> df_matches.groupby(<span class="st">'Name'</span>).size().reset_index(name<span class="op">=</span><span class="st">'Count'</span>)</span>
@@ -937,7 +937,7 @@ Figure&nbsp;5: Similarity matrix
 </tbody>
 </table>
 <p>The following code took <strong>12 hours (!)</strong> to complete on my laptop. ⬇️</p>
-<div id="818ffe71" class="cell" data-execution_count="14">
+<div id="013c97b0" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">""" UNCOMMENT TO REACTIVATE </span></span>
@@ -974,7 +974,7 @@ Figure&nbsp;5: Similarity matrix
 </div>
 </div>
 <p>Reading the csv previously generated (to avoid recalculating)</p>
-<div id="f4af36e4" class="cell" data-execution_count="15">
+<div id="19cce924" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -984,7 +984,7 @@ Figure&nbsp;5: Similarity matrix
 </details>
 </div>
 <p>Finalizing counting of proximity by merging the <strong>NamePattern</strong> (adding their values) depending on their respective <strong>Name</strong>.</p>
-<div id="2d368290" class="cell" data-execution_count="16">
+<div id="15e3bc52" class="cell" data-execution_count="16">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace NamePattern by the associated Name</span></span>
@@ -1013,7 +1013,7 @@ Figure&nbsp;5: Similarity matrix
 </details>
 </div>
 <p>Keeping only the highest 20 most proximities</p>
-<div id="92ef8a82" class="cell" data-execution_count="17">
+<div id="053ed149" class="cell" data-execution_count="17">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute sum for each row/column</span></span>
@@ -1077,8 +1077,12 @@ Figure&nbsp;5: Similarity matrix
 <section id="inspirations-and-further-readings" class="level2">
 <h2 class="anchored" data-anchor-id="inspirations-and-further-readings">Inspirations and further readings</h2>
 <p>Brown, J. Text Analysis and Data Visualization Assignment: Little Women. <em>JBrown’s Blog</em> (2010) <a href="https://jbrownsblog.wordpress.com/2010/11/29/text-analysis-and-data-visualization-exercise/" class="uri">https://jbrownsblog.wordpress.com/2010/11/29/text-analysis-and-data-visualization-exercise/</a></p>
+<p>Brixius, Nathan. Character Heatmaps in Proust’s In Search of Lost&nbsp;Time. <em>Nathan Brixius</em> (2021) <a href="https://nathanbrixius.wordpress.com/2021/01/08/character-heatmaps-in-prousts-in-search-of-lost-time/" class="uri">https://nathanbrixius.wordpress.com/2021/01/08/character-heatmaps-in-prousts-in-search-of-lost-time/</a></p>
+<p>Chao Fan, Zhihui Yang, Yuyi Yuan. Cluster Analysis and Visualization for the Legend of the Condor Heroes Based on Social Network. <em>Scientific Programming</em> (2021). <a href="https://doi.org/10.1155/2021/9439583" class="uri">https://doi.org/10.1155/2021/9439583</a></p>
 <p>Heiss, A. PMAP 8921: Data Visualization (2020) <a href="https://datavizm20.classes.andrewheiss.com/example/13-example/" class="uri">https://datavizm20.classes.andrewheiss.com/example/13-example/</a>, updated for 2025 <a href="https://datavizsp25.classes.andrewheiss.com/example/14-example.html" class="uri">https://datavizsp25.classes.andrewheiss.com/example/14-example.html</a></p>
-<p>Wang, Z., Huang, D., Cui, J.&nbsp;<em>et al.</em>&nbsp;A review of Chinese sentiment analysis: subjects, methods, and trends.&nbsp;<em>Artif Intell Rev</em>&nbsp;<strong>58</strong>, 75 (2025). <a href="https://doi.org/10.1007/s10462-024-10988-9" class="uri">https://doi.org/10.1007/s10462-024-10988-9</a></p>
+<p>LuXun Academy of Fine Arts. A Survey Of The Martial Arts Organizations In Jin Yong’s Novels. <em>Kantar Information is Beautiful Awards 2019</em> <a href="https://www.informationisbeautifulawards.com/showcase/4255-a-survey-of-the-martial-arts-organizations-in-jin-yong-s-novels" class="uri">https://www.informationisbeautifulawards.com/showcase/4255-a-survey-of-the-martial-arts-organizations-in-jin-yong-s-novels</a></p>
+<p>Wang, Z., Huang, D., Cui, J.&nbsp;<em>et al.</em>&nbsp;A review of Chinese sentiment analysis: subjects, methods, and trends.&nbsp;<em>Artif Intell Rev</em>&nbsp;58, 75 (2025). <a href="https://doi.org/10.1007/s10462-024-10988-9" class="uri">https://doi.org/10.1007/s10462-024-10988-9</a></p>
+<p>Wee Hyong Tok. Using R to Gain Insights into the Emotional Journeys in War and Peace. <em>Revolutions</em>. (2016) <a href="https://blog.revolutionanalytics.com/2016/12/war-and-peace.html" class="uri">https://blog.revolutionanalytics.com/2016/12/war-and-peace.html</a></p>
 
 
 </section>

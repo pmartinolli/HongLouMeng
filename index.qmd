@@ -31,7 +31,7 @@ with open("data/fulltext_simplified.txt", "r", encoding="utf-8") as file:
 Putting the content into a panda dataframe and shampooing the data :
 
 | Chapter_num | Chapter                              | RawContent               |
-|---------------|---------------------------------|------------------------|
+|------------------|--------------------------------|-----------------------|
 | integer     | extracted from header of the chapter | full text of the chapter |
 
 ```{python}
@@ -778,6 +778,14 @@ plt.show()
 
 Brown, J. Text Analysis and Data Visualization Assignment: Little Women. *JBrown's Blog* (2010) <https://jbrownsblog.wordpress.com/2010/11/29/text-analysis-and-data-visualization-exercise/>
 
+Brixius, Nathan. Character Heatmaps in Proust’s In Search of Lost Time. *Nathan Brixius* (2021) <https://nathanbrixius.wordpress.com/2021/01/08/character-heatmaps-in-prousts-in-search-of-lost-time/>
+
+Chao Fan, Zhihui Yang, Yuyi Yuan. Cluster Analysis and Visualization for the Legend of the Condor Heroes Based on Social Network. *Scientific Programming* (2021). <https://doi.org/10.1155/2021/9439583>
+
 Heiss, A. PMAP 8921: Data Visualization (2020) <https://datavizm20.classes.andrewheiss.com/example/13-example/>, updated for 2025 <https://datavizsp25.classes.andrewheiss.com/example/14-example.html>
 
-Wang, Z., Huang, D., Cui, J. *et al.* A review of Chinese sentiment analysis: subjects, methods, and trends. *Artif Intell Rev* **58**, 75 (2025). <https://doi.org/10.1007/s10462-024-10988-9>
+LuXun Academy of Fine Arts. A Survey Of The Martial Arts Organizations In Jin Yong's Novels. *Kantar Information is Beautiful Awards 2019* <https://www.informationisbeautifulawards.com/showcase/4255-a-survey-of-the-martial-arts-organizations-in-jin-yong-s-novels>
+
+Wang, Z., Huang, D., Cui, J. *et al.* A review of Chinese sentiment analysis: subjects, methods, and trends. *Artif Intell Rev* 58, 75 (2025). <https://doi.org/10.1007/s10462-024-10988-9>
+
+Wee Hyong Tok. Using R to Gain Insights into the Emotional Journeys in War and Peace. *Revolutions*. (2016) <https://blog.revolutionanalytics.com/2016/12/war-and-peace.html>
